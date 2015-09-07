@@ -1,12 +1,17 @@
 Package: tmcmcR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: tmcmcR : a R package for Transformation based MArkov Chain Monte Carlo
 Version: 0.1
 Date: 2015-09-07
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: person("Kushal", "Dey", email = "kkdey@uchicago.edu", role = c("aut", "cre"))
+           person("Sourabh", "Bhattacharya", email = "kkdey@uchicago.edu", role = "aut")
+Description:  This package performs fast Transformation based Markov Chain Monte Carlo (TMCMC), Transdimensional
+Transformation based Markov Chain Monte Carlo (TTMCMC), Adaptive versions of RWMH and TMCMC, along with
+MC3 (Metropolis Coupled MCMC) and R-MC3 (Randomized MC3) and R-TMC3 (Randomized Transformation based MC3)
+meant for use in case of multimodal target densities. The package also contains convergence and mixing measures of the chains so as to compare the limiting
+behavior.
+License: GPL (>= 2)
 LazyData: TRUE
 LinkingTo: Rcpp
-	.
+	         metrop
 Imports: Rcpp
