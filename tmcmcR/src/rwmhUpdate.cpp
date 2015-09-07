@@ -1,17 +1,15 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-// [[Rcpp::export]]
-
 template <typename T>
 class F {
-public: 
+public:
   F( SEXP f_) : f(f_){}
-  
+
   inline T operator()(NumericVector x){
-    return as<T>(f(x)) ;  
+    return as<T>(f(x)) ;
   }
-  
+
 private:
   Function f ;
 };
@@ -19,7 +17,7 @@ private:
 // [[Rcpp::export]]
 
 NumericVector rwmhUpdate(NumericVector x, NumericVector eps, F<double> f){
-  
+
   int n = x.size();
   NumericVector y = x + eps;
   double p1= f(x);
