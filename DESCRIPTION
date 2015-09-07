@@ -12,5 +12,4 @@ Description:This package performs fast Transformation based Markov Chain Monte C
 License: GPL (>= 2)
 LazyData: TRUE
 LinkingTo: Rcpp
-	         metrop
 Imports: Rcpp
