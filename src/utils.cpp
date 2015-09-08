@@ -2,7 +2,7 @@
 #include "tmcmcR.h"
 using namespace Rcpp;
 // [[Rcpp::export]]
-NumericVector tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f){
+List tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f){
 
   int n = x.size();
   NumericVector y = x + (b*eps);
@@ -12,15 +12,22 @@ NumericVector tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double
   double accept = std::min(1.0,temp);
   double u = R::runif(0,1);
   if (u < accept) {
-    return (y);
-  }else{
-    return (x);
-  }
+    return List::create(
+      _["chain"] = y,
+      _["acc_rate"] = accept
+    );
+    }
+  else{
+    return List::create(
+      _["chain"] = x,
+      _["acc_rate"] = accept
+    );
+    }
 }
 
 
 // [[Rcpp::export]]
-NumericVector rwmhUpdate(NumericVector x, NumericVector eps, F<double> f){
+List rwmhUpdate(NumericVector x, NumericVector eps, F<double> f){
 
   int n = x.size();
   NumericVector y = x + eps;
@@ -30,8 +37,14 @@ NumericVector rwmhUpdate(NumericVector x, NumericVector eps, F<double> f){
   double accept = std::min(1.0,temp);
   double u = R::runif(0,1);
   if (u < accept) {
-    return (y);
-  }else{
-    return (x);
-  }
+    return List::create(
+      _["chain"] = y,
+      _["acc_rate"] = accept
+    );
+    }else{
+      return List::create(
+        _["chain"] = x,
+        _["acc_rate"] = accept
+      );
+      }
 }

@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // tmcmcUpdate
-NumericVector tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f);
+List tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f);
 RcppExport SEXP tmcmcR_tmcmcUpdate(SEXP xSEXP, SEXP bSEXP, SEXP epsSEXP, SEXP fSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
@@ -21,7 +21,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rwmhUpdate
-NumericVector rwmhUpdate(NumericVector x, NumericVector eps, F<double> f);
+List rwmhUpdate(NumericVector x, NumericVector eps, F<double> f);
 RcppExport SEXP tmcmcR_rwmhUpdate(SEXP xSEXP, SEXP epsSEXP, SEXP fSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;

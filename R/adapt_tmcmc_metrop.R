@@ -21,7 +21,7 @@
 
 
 adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, a_rama=NULL,
-                               b_rama=NULL, method=c("Atchade","Haario","Rama","Scam"))
+                               b_rama=NULL, method=c("Atchade","Haario","Rama"))
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   def.scale <- scale;
