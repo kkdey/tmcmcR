@@ -1,4 +1,4 @@
-#' @title Simulate a Randomized  MC3 algorithm (Rcpp sped up version)
+#' @title Simulate a MC3/RMC3 algorithm (Rcpp sped up version)
 #'
 #' @param target_pdf The log target density function from which the user wants to generate samples.
 #' @param scale The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
@@ -8,8 +8,9 @@
 #' @param burn_in The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.
 #'
 #'
-#' @description The function simulates a RWMH chain of length nsamples using the scale, base and burn in taken optimally as default or specified by user. The function
-#' outputs the full chain as well as the estimated posterior mean estimated from the samples drawn post burn-in.
+#' @description The function simulates a MC3/RMC3 chain of length nsamples using the scale, base and burn in taken optimally as default or specified by user.
+#'  beta_set is the set of inverse temperatures chosen using select_inverse_temp() function,
+#'  either under fixed scheme (MC3) or under randomized scheme (RMC3)
 #'
 #
 #'  @author  Kushal K Dey

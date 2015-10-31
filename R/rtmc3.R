@@ -8,9 +8,9 @@
 #' @param burn_in The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.
 #'
 #'
-#' @description The function simulates a TMCMC chain of length nsamples using the scale, base and burn in taken optimally as default or specified by user. The function
-#' outputs the full chain as well as the estimated posterior mean estimated from the samples drawn post burn-in.
-#'
+#' @description The function simulates a MC3/RMC3 chain of length nsamples using the scale, base and burn in taken optimally as default or specified by user.
+#'  beta_set is the set of inverse temperatures chosen using select_inverse_temp() function,
+#'  either under fixed scheme (TMC3) or under randomized scheme (RTMC3)
 #
 #'  @author  Kushal K Dey, Sourabh Bhattacharya
 #'
