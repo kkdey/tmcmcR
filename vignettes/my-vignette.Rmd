@@ -1,0 +1,84 @@
+---
+title: "tmcmcR:  a fast sampling scheme in high dimensions"
+author: "Kushal K Dey"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview of tmcmcR
+
+Transformation based Markov Chain Monte Carlo (TMCMC) is a modification of standard Random Walk Metropolis Hastings (RWMH), which is the simplest and still the most widely used MCMC mechanism. It has been shown that TMCMC  is computationally faster, has better acceptance rate and has better coverage of the state space, specially in high dimensions compared to RWMH. In this package **tmcmcR**, we implement the R/C++ versions of RWMH and TMCMC, along with several adaptive versions of the TMCMC algorithm  and metropolis coupled approaches applicable for simulating from multimodal target densities. 
+
+To install the *tmcmcR** package, 
+
+```{r install_package, results='hide', message = FALSE, warning = FALSE}
+library(devtools)
+install_github('kkdey/tmcmcR')
+```
+
+To load the package,
+
+```{r load_package,  message = FALSE, warning = FALSE}
+require(tmcmcR)
+```
+
+## Inputs format
+
+As of version 0.0.1, the arguments to the tmcmcR functions are pretty generic. All the sampling functions in the package take a `target_pdf` model which is a statistical model density, specified as a function of the parameters, on which we want to run the sampling mechanism. The user should transform the parameters such that they are unconstrained and the state space spans $\mathbb{R}^{d}$ for $d$ many parameters. Often the target pdf is easier to specify under naturally constarined parameters, for instance the simplex variables. In such a case, the user must have the unconstrained parameters as arguments to ` target_pdf` and must include the transformations inside the `target_pdf` function.
+
+All the sampling schemes take a `base` input which is the starting value of the chain. The default is all zeros. However, if the user has prior information about the concentration of the `target_pdf`, it is better to provide a `base` that is close to the region of high concentration for faster convergence to the target. 
+
+The other common feature in all functions is the argument `nsamples` which represents the total number of samples we generate for the chain. The burn in is assumed to be $\frac{1}{3}$ rd of the `nsamples`. 
+
+## Illustration
+
+We present an illustration of the different sampling schemes in tmcmcR. We assume a model from which we want to simulate. 
+
+
+
+
+## Vignette Info
+
+Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+
+## Styles
+
+The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+
+```{r, fig.show='hold'}
+plot(1:10)
+plot(10:1)
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(mtcars, 10))
+```
+
+Also a quote using `>`:
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))

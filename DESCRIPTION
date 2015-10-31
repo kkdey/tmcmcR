@@ -6,10 +6,12 @@ Date: 2015-09-07
 Authors@R: c(person("Kushal", "Dey", email = "kkdey@uchicago.edu", role = c("aut", "cre")),
            person("Sourabh", "Bhattacharya", email = "bhsourabh@gmail.com", role = "aut"))
 Maintainer: Kushal K Dey <kkdey@uchicago.edu>
-Description:This package performs fast Transformation based Markov Chain Monte Carlo (TMCMC),Transdimensional Transformation based Markov Chain Monte Carlo (TTMCMC), Adaptive versions of RWMH and
+Description: This package performs fast Transformation based Markov Chain Monte Carlo (TMCMC),Transdimensional Transformation based Markov Chain Monte Carlo (TTMCMC), Adaptive versions of RWMH and
             TMCMC, along with MC3 (Metropolis Coupled MCMC) and R-MC3 (Randomized MC3) and R-TMC3 (Randomized
             Transformation based MC3) meant for use in case of multimodal target densities.
 License: GPL (>= 2)
 LazyData: TRUE
 LinkingTo: Rcpp
 Imports: Rcpp
+Suggests: knitr
+VignetteBuilder: knitr
