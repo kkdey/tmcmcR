@@ -1,6 +1,6 @@
 #' @title Simulate a Transformation based Markov Chain Monte Carlo (TMCMC) algorithm (Rcpp sped up version)
 #'
-#' @param target_pdf The target density function from which the user wants to generate samples.
+#' @param target_pdf The log target density function from which the user wants to generate samples.
 #' @param scale The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
 #'              The default scale is this estimated optimal scaling
 #' @param base The starting value of the chain
