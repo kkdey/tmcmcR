@@ -12,7 +12,7 @@
 #'  beta_set is the set of inverse temperatures chosen using select_inverse_temp() function,
 #'  either under fixed scheme (TMC3) or under randomized scheme (RTMC3)
 #
-#'  @author  Kushal K Dey, Sourabh Bhattacharya
+#'  @author  Kushal K Dey
 #'
 #'  @export
 #'
@@ -21,6 +21,8 @@
 
 rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
 {
+  sourceCpp('src/RcppExports.cpp')
+  sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   rtmc3_chains <- vector("list", length(beta_set));
   num = 1

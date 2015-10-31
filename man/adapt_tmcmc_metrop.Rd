@@ -31,6 +31,6 @@ The function simulates adaptive TMCMC chain of length nsamples using one of the 
              The other inputs and the output same as tmcmc_metrop function.
 }
 \author{
-Kushal K Dey, Sourabh Bhattacharya
+Kushal K Dey
 }
 

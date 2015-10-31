@@ -24,6 +24,6 @@ The function simulates a MC3/RMC3 chain of length nsamples using the scale, base
  either under fixed scheme (TMC3) or under randomized scheme (RTMC3)
 }
 \author{
-Kushal K Dey, Sourabh Bhattacharya
+Kushal K Dey
 }
 

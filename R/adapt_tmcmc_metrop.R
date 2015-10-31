@@ -15,7 +15,7 @@
 #'              The other inputs and the output same as tmcmc_metrop function.
 #'
 #
-#'  @author  Kushal K Dey, Sourabh Bhattacharya
+#'  @author  Kushal K Dey
 #'
 #'  @export
 
@@ -23,6 +23,8 @@
 adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, a_rama=NULL,
                                b_rama=NULL, method=c("Atchade","Haario","Rama"))
 {
+  sourceCpp('src/RcppExports.cpp')
+  sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   def.scale <- scale;
   chain <- matrix(0, nsamples, length(base))

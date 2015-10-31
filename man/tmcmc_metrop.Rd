@@ -23,6 +23,6 @@ The function simulates a TMCMC chain of length nsamples using the scale, base an
 outputs the full chain as well as the estimated posterior mean estimated from the samples drawn post burn-in.
 }
 \author{
-Kushal K Dey, Sourabh Bhattacharya
+Kushal K Dey
 }
 
