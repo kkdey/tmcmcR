@@ -12,7 +12,7 @@
 #' outputs the full chain as well as the estimated posterior mean estimated from the samples drawn post burn-in.
 #'
 #
-#'  @author  Kushal K Dey, Sourabh Bhattacharya
+#'  @author  Kushal K Dey
 #'
 #'  @export
 
@@ -26,6 +26,8 @@ rwmh_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
   while(num <= nsamples) {
     eps <- rnorm(length(base),0,scale);
     chain[(num+1),] <- rwmhUpdate(chain[num,],eps,target_pdf)$chain
+    if(num %% 500 ==0)
+      paste("The chain is at iteration:",num);
   }
   posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
   ll <- list("chain"=chain,"post.mean"=posterior_mean);
