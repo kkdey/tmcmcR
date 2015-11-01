@@ -40,7 +40,7 @@ adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, 
                           scale <- scale + (1/num) *(out$acc_rate - 0.439);
                           if(num %% 500 ==0)
                             paste("The chain is at iteration:",num);
-
+                          num <- num + 1;
                           }
   }
   if(method=="Haario"){
@@ -59,7 +59,7 @@ adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, 
                             scale <- def.scale * var(unique(store[1:num])) + 0.001*def.scale;
                             if(num %% 500 ==0)
                               paste("The chain is at iteration:",num);
-
+                            num <- num + 1;
                             }
   }
   if(method=="Rama"){
@@ -75,7 +75,7 @@ adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, 
                           chain[(num+1),] <- out$chain;
                           if(num %% 500 ==0)
                             paste("The chain is at iteration:",num);
-
+                          num <- num + 1;
                         }
 
   }

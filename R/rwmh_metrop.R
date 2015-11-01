@@ -30,6 +30,7 @@ rwmh_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
     chain[(num+1),] <- rwmhUpdate(chain[num,],eps,target_pdf)$chain
     if(num %% 500 ==0)
       paste("The chain is at iteration:",num);
+    num <- num +1;
   }
   posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
   ll <- list("chain"=chain,"post.mean"=posterior_mean);

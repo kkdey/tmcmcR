@@ -55,8 +55,10 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
       rtmc3_chains[[k-1]][num,] <- chain1;
     }
   }
-    if(num %% 500 ==0)
+    if(num %% 500 ==0){
       paste("The chains are at iteration:",num);
+    }
+    num <- num + 1;
   }
 
   posterior_mean <- apply(rtmc3_chains[[1]][round(burn_in):nsamples,], 2, mean);
