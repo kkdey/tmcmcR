@@ -20,7 +20,7 @@
 tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
 {
   #Rcpp::sourceCpp('src/RcppExports.cpp')
-  #Rcpp::sourceCpp('src/utils.cpp')
+  Rcpp::sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
   chain[1,] <- base;
