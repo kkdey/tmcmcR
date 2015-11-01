@@ -27,7 +27,7 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
   rtmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){
-    rtmc3_chains <- mclapply(1:length(beta_set),
+    rtmc3_chains <- parallel::mclapply(1:length(beta_set),
                   function(k){
                                 if(num==1)
                                   chain <- base;

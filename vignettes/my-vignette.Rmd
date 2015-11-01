@@ -26,7 +26,7 @@ To load the package,
 require(tmcmcR)
 ```
 
-## Inputs format
+## Arguments Format
 
 As of version 0.0.1, the arguments to the tmcmcR functions are pretty generic. All the sampling functions in the package take a `target_pdf` model which is a statistical model density, specified as a function of the parameters, on which we want to run the sampling mechanism. The user should transform the parameters such that they are unconstrained and the state space spans $\mathbb{R}^{d}$ for $d$ many parameters. Often the target pdf is easier to specify under naturally constarined parameters, for instance the simplex variables. In such a case, the user must have the unconstrained parameters as arguments to ` target_pdf` and must include the transformations inside the `target_pdf` function.
 
@@ -37,6 +37,12 @@ The other common feature in all functions is the argument `nsamples` which repre
 ## Illustration
 
 We present an illustration of the different sampling schemes in tmcmcR. We assume a model from which we want to simulate. 
+
+```{r echo=TRUE, eval=TRUE}
+
+
+```
+
 
 
 
