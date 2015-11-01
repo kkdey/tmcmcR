@@ -20,18 +20,18 @@
 tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
 {
   #Rcpp::sourceCpp('src/RcppExports.cpp')
-  Rcpp::sourceCpp('src/utils.cpp')
+  #Rcpp::sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
-  num=1;
   chain[1,] <- base;
+  num <- 2
   while(num <= nsamples) {
     eps <- rnorm(1,0,scale);
     b <- sample(c(-1,+1),length(base),replace=TRUE)
-    chain[(num+1),] <- tmcmcUpdate(chain[num,],b,eps,target_pdf)$chain
-    if(num %% 100 ==0)
+    chain[num,] <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)$chain;
+    if(num %% 100 == 0)
       paste("The chain is at iteration:",num);
-    num <- num +1;
+    num <- num + 1;
   }
   posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
   ll <- list("chain"=chain,"post.mean"=posterior_mean);
