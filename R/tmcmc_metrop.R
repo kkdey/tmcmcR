@@ -29,7 +29,7 @@ tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
     eps <- rnorm(1,0,scale);
     b <- sample(c(-1,+1),length(base),replace=TRUE)
     chain[num,] <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)$chain;
-    if(num %% 100 == 0)
+    if(num %% 500 == 0)
       paste("The chain is at iteration:",num);
     num <- num + 1;
   }

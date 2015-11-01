@@ -23,11 +23,11 @@ rwmh_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
   Rcpp::sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
-  num=1;
   chain[1,] <- base;
+  num=2;
   while(num <= nsamples) {
     eps <- rnorm(length(base),0,scale);
-    chain[(num+1),] <- rwmhUpdate(chain[num,],eps,target_pdf)$chain
+    chain[num,] <- rwmhUpdate(chain[(num-1),],eps,target_pdf)$chain
     if(num %% 500 ==0)
       paste("The chain is at iteration:",num);
     num <- num +1;

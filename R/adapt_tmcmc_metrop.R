@@ -28,15 +28,15 @@ adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, 
   if(is.null(burn_in)) burn_in <- nsamples/3;
   def.scale <- scale;
   chain <- matrix(0, nsamples, length(base))
-  num=2;
   chain[1,] <- base;
+  num=2;
 
   if(method=="Atchade"){
                           while(num <= nsamples) {
                           eps <- rnorm(1,0,scale);
                           b <- sample(c(-1,+1),length(base),replace=TRUE)
-                          out <- tmcmcUpdate(chain[num,],b,eps,target_pdf)
-                          chain[(num+1),] <- out$chain;
+                          out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
+                          chain[num,] <- out$chain;
                           scale <- scale + (1/num) *(out$acc_rate - 0.439);
                           if(num %% 500 ==0)
                             paste("The chain is at iteration:",num);
@@ -49,8 +49,8 @@ adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, 
                           while(num <= nsamples) {
                             eps <- rnorm(1,0,scale);
                             b <- sample(c(-1,+1),length(base),replace=TRUE)
-                            out <- tmcmcUpdate(chain[num,],b,eps,target_pdf)
-                            chain[(num+1),] <- out$chain;
+                            out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
+                            chain[num,] <- out$chain;
                             if(min(abs(out$chain-chain[num,]))==0){
                               store_eps[num] <- store_eps[(num-1)];
                             } else{
@@ -71,8 +71,8 @@ adapt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, 
                           }
                           eps <- rnorm(1,0,scale);
                           b <- sample(c(-1,+1),length(base),replace=TRUE)
-                          out <- tmcmcUpdate(chain[num,],b,eps,target_pdf)
-                          chain[(num+1),] <- out$chain;
+                          out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
+                          chain[num,] <- out$chain;
                           if(num %% 500 ==0)
                             paste("The chain is at iteration:",num);
                           num <- num + 1;
