@@ -4,14 +4,11 @@
 \alias{adapt_tmcmc_metrop}
 \title{Simulate adaptive TMCMC algorithm (Haario, Atchade and RAMA method)}
 \usage{
-adapt_tmcmc_metrop(target_pdf, scale, base, nsamples, burn_in = NULL,
+adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
   a_rama = NULL, b_rama = NULL, method = c("Atchade", "Haario", "Rama"))
 }
 \arguments{
 \item{target_pdf}{The target density function from which the user wants to generate samples.}
-
-\item{scale}{The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
-The default scale is this estimated optimal scaling}
 
 \item{base}{The starting value of the chain}
 
@@ -25,6 +22,9 @@ The default scale is this estimated optimal scaling}
 
 \item{method}{The method of adaptation used for generating the chain. May be one of 3 types- Haario,
               Atchade and the RAMA methods.}
+
+\item{scale}{The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
+The default scale is this estimated optimal scaling}
 }
 \description{
 The function simulates adaptive TMCMC chain of length nsamples using one of the three methods of adaptation - Haario, Atchade and RAMA.
