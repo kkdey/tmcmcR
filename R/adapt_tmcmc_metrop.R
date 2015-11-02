@@ -24,8 +24,6 @@
 adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
                                b_rama=NULL, method=c("Atchade","Haario","Rama"))
 {
-  Rcpp::sourceCpp('src/RcppExports.cpp')
-  Rcpp::sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   scale <- 1;
   chain <- matrix(0, nsamples, length(base))

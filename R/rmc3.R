@@ -23,8 +23,6 @@
 
 rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
 {
-  Rcpp::sourceCpp('src/RcppExports.cpp')
-  Rcpp::sourceCpp('src/utils.cpp')
   if(is.null(burn_in)) burn_in <- nsamples/3;
   rmc3_chains <- vector("list", length(beta_set));
   num = 1
