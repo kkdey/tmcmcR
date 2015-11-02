@@ -40,13 +40,13 @@ The other common feature in all functions is the argument `nsamples` which repre
 
 We present an illustration of the different sampling schemes in **tmcmcR**. We assume a model from which we want to simulate. Assume the simulation model (an example model taken from Mattingly et al.)
 
-```{r echo=TRUE, eval=FALSE}
+```{r echo=TRUE, eval=TRUE}
 d=50;  ##  dimension of the simulated variable
 
 mu_target=rep(0,d);
 Sigma_target = 0.01*diag(1/(1:(d))*d);
 
-Mattingly_matrix <- (diag(1-0.7,d)+0.7*rep(1,d)%*%t(rep(1,d)));
+Mattingly_matrix <- 100*(diag(1-0.7,d)+0.7*rep(1,d)%*%t(rep(1,d)));
 
 library(mvtnorm)
 
@@ -62,20 +62,20 @@ We simulate the RWMH and the TMCMC chains for the model above.
 
 We choose our starting point or `base` to be independently drawn $N(0,1)$ random variables for each co-ordinate.
 
-```{r echo=TRUE, eval=FALSE}
+```{r echo=TRUE, eval=TRUE}
 base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
 ```
 
 For running the general RWMH chain, use the `rwmh_metrop` function.
 
-```{r echo=TRUE, eval=FALSE}
-out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000)
+```{r echo=TRUE, eval=TRUE}
+system.time(out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000))
 ```
 
 To run the TMCMC chain, use the `tmcmc_metrop` function.
 
-```{r echo=TRUE, eval=FALSE}
-out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000)
+```{r echo=TRUE, eval=TRUE}
+system.time(out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000))
 ```
 
 ### Adaptive version
@@ -106,7 +106,7 @@ inverse_temp <- select_inverse_temp(pdf_component, minbeta=0.05, L_iter =50,
 The above function would fix the inverse temperatures for the RTMC3 chain.
 The user may choose the `sim_method` to be RWMH for RMC3 chain. Correspondingly, fixing the `inv_temp_scheme` to be \textbf{fixed} would generate the inverse temperatures for the MC3 and TMC3 chains.
 
-Then for the RTMC3, one can define the `beta_set` to be the output array of inverse temperatures selected above.
+For RTMC3, one can define the `beta_set` to be the output array of inverse temperatures selected above.
 
 ```{r echo=TRUE, eval=FALSE}
 
@@ -114,6 +114,15 @@ base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
 out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, nsamples=5000)
 
 ```
+
+## Performance illustration
+
+We first compare the performance of the TMCMC chain and the RWMH chain in terms of convergence to the test distribution. We ran $50$ chains of TMCMC and RWMH for the model specified above for $nsamples = 5000$ and then compared the empirical distribution of the two chains at each time with the target density. We present the plots for two arbitrary co-ordinates.
+
+<img src='ks_compare_1.png' style="width:300px;height:200px;">
+<img src='ks_compare_2.png' style="width:300px;height:200px;">
+
+
 
 
 
