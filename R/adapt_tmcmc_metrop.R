@@ -22,10 +22,10 @@
 
 
 adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
-                               b_rama=NULL, method=c("Atchade","Haario","Rama"))
+                               b_rama=NULL, def.scale =1, method=c("Atchade","Haario","Rama"))
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
-  scale <- 1;
+  scale <- def.scale;
   chain <- matrix(0, nsamples, length(base))
   chain[1,] <- base;
   num=2;
@@ -44,7 +44,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
   }
   if(method=="Haario"){
                           store_eps <- array(0, nsamples)
-                          store_eps[1] <- def.scale;
+                          store_eps[1] <- 0;
                           while(num <= nsamples) {
                             eps <- rnorm(1,0,scale);
                             b <- sample(c(-1,+1),length(base),replace=TRUE)
@@ -55,7 +55,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                             } else{
                               store_eps[num] <- eps;
                             }
-                            scale <- def.scale * var(unique(store[1:num])) + 0.001*def.scale;
+                            scale <- scale * var(unique(store[1:num])) + 0.001*scale;
                             if(num %% 500 ==0)
                               paste("The chain is at iteration:",num);
                             num <- num + 1;

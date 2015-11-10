@@ -1,5 +1,5 @@
 ---
-title: "tmcmcR:  a fast sampling scheme in high dimensions"
+title: "tmcmcR:  R package for sampling with improved coverage"
 author: "Kushal K Dey"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -11,7 +11,7 @@ vignette: >
 
 ## Overview of tmcmcR
 
-Transformation based Markov Chain Monte Carlo (TMCMC) is a modification of standard Random Walk Metropolis Hastings (RWMH), which is the simplest and still the most widely used MCMC mechanism. It has been shown that TMCMC  is computationally faster, has better acceptance rate and has better coverage of the state space, specially in high dimensions compared to RWMH. In this package **tmcmcR**, we implement the R/C++ versions of RWMH and TMCMC, along with several adaptive versions of the TMCMC algorithm  and metropolis coupled approaches applicable for simulating from multimodal target densities. 
+Transformation based Markov Chain Monte Carlo (TMCMC) is a modification of standard Random Walk Metropolis Hastings (RWMH), which is the simplest and still the most widely used MCMC mechanism. TMCMC  is computationally fast and  has better acceptance rate and better coverage of the state space, specially in high dimensions, compared to RWMH. See [Dutta and Bhattacharya 2014](http://www.sciencedirect.com/science/article/pii/S1572312713000683) and  [Dey and Bhattacharya 2015](http://imstat.org/bjps/papers/BJPS295.pdf) for the algorithm and theoretical properties of TMCMC. In this package **tmcmcR**, we implement the Rcpp versions of RWMH and TMCMC, along with several adaptive versions of the TMCMC algorithm  and metropolis coupled approaches applicable for simulating from multimodal target densities.
 
 To install the **tmcmcR** package, 
 
@@ -80,7 +80,7 @@ system.time(out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000))
 
 ### Adaptive version
 
-For the general RWMH and TMCMC chains, the user is required to provide the proposal `scale` and the performance of the chain depends on the choice of the `scale`. Check Dey and Bhattacharya for the choice of optimal scales for the TMCMC chain. However fixing the scale for very complicated models may be tricky. The user can get around this problem by opting for adaptive version of the above chains. The function `adapt_tmcmc_metrop.R` fits adaptive TMCMC chains. The user can choose one of 3 adaptive schemes - Atchade method, Haario method and RAMA. 
+For the general RWMH and TMCMC chains, the user is required to provide the proposal `scale` and the performance of the chain depends on the choice of the `scale`. Check [Dey and Bhattacharya 2015](http://arxiv.org/abs/1307.1446) for the choice of optimal scales for the TMCMC chain. However, fixing the scale for very complicated models may be tricky. The user can get around this problem by opting for adaptive version of the above chains. The function `adapt_tmcmc_metrop.R` fits adaptive TMCMC chains. The user can choose one of 3 adaptive schemes - Atchade method, Haario method and RAMA. 
 
 ```{r echo=TRUE, eval=FALSE}
 out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Atchade");
@@ -94,7 +94,7 @@ out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000,
 
 ### Metropolis coupling
 
-The usual RWMH or TMCMC chains do not perform well on multimodal densities and have a tendency to get stuck at one of the modes. Metropolis coupling is a popular technique used to get around this problem. One runs multiple chains on the model density $f(x)^{\beta}$ for different choices of $\beta$ ranging from $1$ to $\beta_{min}$, where the latter is a value close to $0$. To choose the $\beta$ values (also called inverse temperatures), one can use two types of stepsize selection approach - fixed or randomized. The selection of inverse temperatures is performed by 
+The usual RWMH or TMCMC chains do not perform well on multimodal densities and have a tendency to get stuck at one of the modes. Metropolis coupling is a popular technique used to get around this problem. One runs multiple chains on the model density $f(x)^{\beta}$ for different choices of $\beta$ ranging from $1$ to $\beta_{min}$, where the latter is a value close to $0$. To choose the $\beta$ values (also called inverse temperatures), one can use two types of stepsize selection approach - fixed or randomized. The selection of inverse temperatures for the fixed approach in MC3 is similar to the approach suggested in [Atchade, Roberts and Rosenthal 2010](http://link.springer.com/article/10.1007%2Fs11222-010-9192-1). We generalized this approach for the randomized version and also extended it to transformation based chains. 
 
 ```{r echo=TRUE, eval=FALSE}
 
@@ -122,6 +122,16 @@ We first compare the performance of the TMCMC chain and the RWMH chain in terms 
 <img src='ks_compare_1.png' style="width:300px;height:200px;">
 <img src='ks_compare_2.png' style="width:300px;height:200px;">
 
+Next we compare the performances of the adaptive versions of TMCMC against the test distribution and see how the three adaptive methods - due to Atchade, Haario and the RAMA methods perform cin comparison to each other. 
+
+
+
+### Acknowledgements
+
+
+- Sourabh Bhattacharya, Indian Statistical Institute
+- Gao Wang, Stephens Lab, University of Chicago
+- Nan Xiao, Stephens Lab, University of Chicago
 
 
 
