@@ -5,7 +5,8 @@
 \title{Simulate adaptive TMCMC algorithm (Haario, Atchade and RAMA method)}
 \usage{
 adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
-  a_rama = NULL, b_rama = NULL, method = c("Atchade", "Haario", "Rama"))
+  a_rama = NULL, b_rama = NULL, def.scale = 1, method = c("Atchade",
+  "Haario", "Rama"))
 }
 \arguments{
 \item{target_pdf}{The target density function from which the user wants to generate samples.}

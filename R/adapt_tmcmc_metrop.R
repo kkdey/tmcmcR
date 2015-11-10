@@ -55,7 +55,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                             } else{
                               store_eps[num] <- eps;
                             }
-                            scale <- scale * var(unique(store[1:num])) + 0.001*scale;
+                            scale <- scale * var(unique(store_eps[1:num])) + 0.001*scale;
                             if(num %% 500 ==0)
                               paste("The chain is at iteration:",num);
                             num <- num + 1;
