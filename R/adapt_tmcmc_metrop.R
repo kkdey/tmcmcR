@@ -35,7 +35,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
 
   if(method=="Atchade"){
                           while(num <= nsamples) {
-                          eps <- rnorm(1,0,scale);
+                          eps <- abs(rnorm(1,0,scale));
                           b <- sample(c(-1,+1),length(base),replace=TRUE)
                           out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
                           chain[num,] <- out$chain;
@@ -60,7 +60,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           if(num > 10){
                             scale <- (2.4)^2 * var(unique(chain[1:num,]) + 0.005);
                           }
-                          if(num < 10){
+                          if(num <= 10){
                             scale <- 5;
                           }
                           if(num %% 500 ==0)
