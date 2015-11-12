@@ -45,24 +45,28 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           num <- num + 1;
                           }
   }
-  if(method=="Haario"){
-                          store_eps <- array(0, nsamples)
-                          store_eps[1] <- 0;
-                          while(num <= nsamples) {
-                            eps <- abs(rnorm(1,0,scale));
-                            b <- sample(c(-1,+1),length(base),replace=TRUE)
-                            out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
-                            chain[num,] <- out$chain;
-                            if(min(abs(out$chain-chain[num,]))==0){
-                              store_eps[num] <- store_eps[(num-1)];
-                            } else{
-                              store_eps[num] <- eps;
-                            }
-                            scale <- scale * var(unique(store_eps[1:num])) + 0.001*scale;
-                            if(num %% 500 ==0)
-                              paste("The chain is at iteration:",num);
+  if(method=="SCAM"){
+                        scale <- 5;
+                        while(num <= nsamples) {
+                          eps <- abs(rnorm(1,0,scale));
+                          b <- sample(c(-1,+1),length(base),replace=TRUE)
+                          out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
+                          chain[num,] <- out$chain;
+                           # if(min(abs(out$chain-chain[num,]))==0){
+                          #    store_eps[num] <- store_eps[(num-1)];
+                           # } else{
+                            #  store_eps[num] <- eps;
+                            #}
+                          if(num > 10){
+                            scale <- (2.4)^2 * var(unique(chain[1:num,]) + 0.005);
+                          }
+                          if(num < 10){
+                            scale <- 5;
+                          }
+                          if(num %% 500 ==0)
+                            paste("The chain is at iteration:",num);
                             num <- num + 1;
-                            }
+                          }
   }
   if(method=="Rama"){
                         while(num <= nsamples) {
