@@ -22,13 +22,16 @@
 
 
 adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
-                               b_rama=NULL, def.scale =1, method=c("Atchade","Haario","Rama"))
+                               b_rama=NULL, M_rama =NULL, def.scale =1, method=c("Atchade","Haario","Rama"))
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   scale <- def.scale;
   chain <- matrix(0, nsamples, length(base))
   chain[1,] <- base;
   num=2;
+  if(is.null(a_rama)) a_rama <- 0
+  if(is.null(b_rama)) b_rama <- 0
+  if(is.null(M_rama)) M_rama <- 100
 
   if(method=="Atchade"){
                           while(num <= nsamples) {
@@ -46,7 +49,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           store_eps <- array(0, nsamples)
                           store_eps[1] <- 0;
                           while(num <= nsamples) {
-                            eps <- rnorm(1,0,scale);
+                            eps <- abs(rnorm(1,0,scale));
                             b <- sample(c(-1,+1),length(base),replace=TRUE)
                             out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
                             chain[num,] <- out$chain;
@@ -63,14 +66,28 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
   }
   if(method=="Rama"){
                         while(num <= nsamples) {
-                          if (norm(chain[num,],type='2') < length(base)){
+                          if (norm(chain[num,],type='2') < sqrt(length(base))){
+                            flag <- 0;
                             scale <- exp(2*a_rama[num])
                           }else{
+                            flag <- 1;
                             scale <- exp(2*b_rama[num])
                           }
-                          eps <- rnorm(1,0,scale);
+                          eps <- abs(rnorm(1,0,scale));
                           b <- sample(c(-1,+1),length(base),replace=TRUE)
                           out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
+                          if(flag ==1)
+                          {
+                            b_rama <- b_rama + as.numeric(out$acc_rate > 0.44)*min(0.01, 1/sqrt(num));
+                            if(b_rama > M_rama) b_rama <- M_rama
+                            if(b_rama <= -M_rama) b_rama <- -M_rama
+                          }
+                          if(flag ==0)
+                          {
+                            a_rama <- a_rama + as.numeric(out$acc_rate > 0.44)*min(0.01, 1/sqrt(num));
+                            if(a_rama > M_rama) a_rama <- M_rama
+                            if(a_rama <= -M_rama) a_rama <- -M_rama
+                          }
                           chain[num,] <- out$chain;
                           if(num %% 500 ==0)
                             paste("The chain is at iteration:",num);
