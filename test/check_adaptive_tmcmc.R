@@ -9,15 +9,13 @@ library(tmcmcR)
 
 library(mcmc)
 d=50;  ##  dimension of the simulated variable
-L=10; ###   the number of replications we use for finding KS statistic
+L=30; ###   the number of replications we use for finding KS statistic
 nsamples <- 5000;
 Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
 
 mu_target=rep(0,d);
 Sigma_target = 0.01*diag(1/(1:(d))*d);
-
-L=30; ###   the number of replications we use for finding KS statistic
 
 Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
@@ -37,7 +35,7 @@ base=rnorm(d,0,1);
 for ( l in 1:L)
 {
   Mult_Mattingly[1,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Atchade", verb=FALSE)$chain;
-  Mult_Mattingly[2,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Haario", verb=FALSE)$chain;
+  Mult_Mattingly[2,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="SCAM", verb=FALSE)$chain;
   Mult_Mattingly[3,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Rama", verb=FALSE)$chain
   cat("We are at iter:",l, "\n")
 }
@@ -63,6 +61,6 @@ for(d in 1:40)
   title(xlab="Time step of run");
   title(ylab="KS test distance");
   title(main="KS plot comparison");
-  legend("topright",c("Atchade","Haario", "Rama"),fill=c("red","blue","green"),border="black");
+  legend("topright",c("Atchade","SCAM", "Rama"),fill=c("red","blue","green"),border="black");
 }
 

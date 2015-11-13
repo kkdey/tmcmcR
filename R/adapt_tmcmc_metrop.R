@@ -23,7 +23,7 @@
 
 adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
                                b_rama=NULL, M_rama =NULL, def.scale =1, verb=TRUE,
-                               method=c("Atchade","Haario","Rama"))
+                               method=c("Atchade","SCAM","Rama"))
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   scale <- def.scale;
@@ -62,7 +62,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                             #  store_eps[num] <- eps;
                             #}
                           if(num > 10){
-                            scale <- sqrt((2.4)^2 * var(unique(chain[1:num,]) + 0.005));
+                            scale <- sqrt((2.4)^2 * var(chain[1:num,]) + 0.005);
                           }
                           if(num <= 10){
                             scale <- 5;
