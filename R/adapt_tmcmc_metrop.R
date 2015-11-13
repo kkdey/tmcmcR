@@ -6,9 +6,12 @@
 #' @param base The starting value of the chain
 #' @param nsamples The number of samples to be drawn using the TMCMC algorithm.
 #' @param burn_in The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.
-#' @param a_rama The scaling coefficients (a[n]) used in RAMA
-#' @param b_rama The scaling coefficients (b[n]) used in RAMA
-#' @param method The method of adaptation used for generating the chain. May be one of 3 types- Haario,
+#' @param a_rama The scaling used in RAMA if norm of the chain at current iterate is less than dimension.
+#' @param b_rama The scaling used in RAMA if norm of the chain at current iterate is greater than dimension.
+#' @param M_rama The bounds on a_rama and b_rama, lower bound is -M_rama, upper bound is M_rama.
+#' @param atchade_low The lower bound of scale for Atchade scheme
+#' @param atchade_high The upper bound of scale for Atchade scheme
+#' @param method The method of adaptation used for generating the chain. May be one of 3 types- SCAM,
 #'               Atchade and the RAMA methods.
 #'
 #' @description The function simulates adaptive TMCMC chain of length nsamples using one of the three methods of adaptation - Haario, Atchade and RAMA.
@@ -23,6 +26,7 @@
 
 adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
                                b_rama=NULL, M_rama =NULL, def.scale =1, verb=TRUE,
+                               atchade_low = NULL, atchade_high=NULL,
                                method=c("Atchade","SCAM","Rama"))
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
@@ -30,17 +34,18 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
   chain <- matrix(0, nsamples, length(base))
   chain[1,] <- base;
   num=2;
-  if(is.null(a_rama)) a_rama <- 0
-  if(is.null(b_rama)) b_rama <- 0
-  if(is.null(M_rama)) M_rama <- 100
 
   if(method=="Atchade"){
+                          if(is.null(atchade_low)) atchade_low <- 0.005;
+                          if(is.null(atchade_high)) atchade_high <- 50;
                           while(num <= nsamples) {
                           eps <- abs(rnorm(1,0,scale));
                           b <- sample(c(-1,+1),length(base),replace=TRUE)
                           out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
                           chain[num,] <- out$chain;
                           scale <- scale + (1/num) *(out$acc_rate - 0.439);
+                          if(scale < atchade_low) scale <- atchade_low;
+                          if(scale > atchade_high) scale <- atchade_high;
                           if(num %% 500 ==0){
                             if(verb){
                               cat("The chain is at iteration:",num);
@@ -77,13 +82,16 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           }
   }
   if(method=="Rama"){
-                        while(num <= nsamples) {
+                      if(is.null(a_rama)) a_rama <- 0
+                      if(is.null(b_rama)) b_rama <- 0
+                      if(is.null(M_rama)) M_rama <- 100
+                      while(num <= nsamples) {
                           if (norm(chain[(num-1),],type='2') < sqrt(length(base))){
-                            flag <- 0;
-                            scale <- exp(2*a_rama)
+                          flag <- 0;
+                          scale <- exp(2*a_rama)
                           }else{
-                            flag <- 1;
-                            scale <- exp(2*b_rama)
+                          flag <- 1;
+                          scale <- exp(2*b_rama)
                           }
                           eps <- abs(rnorm(1,0,scale));
                           b <- sample(c(-1,+1),length(base),replace=TRUE)

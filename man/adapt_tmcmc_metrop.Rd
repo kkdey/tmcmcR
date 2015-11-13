@@ -6,7 +6,8 @@
 \usage{
 adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
   a_rama = NULL, b_rama = NULL, M_rama = NULL, def.scale = 1,
-  verb = TRUE, method = c("Atchade", "SCAM", "Rama"))
+  verb = TRUE, atchade_low = NULL, atchade_high = NULL,
+  method = c("Atchade", "SCAM", "Rama"))
 }
 \arguments{
 \item{target_pdf}{The target density function from which the user wants to generate samples.}
@@ -17,11 +18,17 @@ adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
 
 \item{burn_in}{The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.}
 
-\item{a_rama}{The scaling coefficients (a[n]) used in RAMA}
+\item{a_rama}{The scaling used in RAMA if norm of the chain at current iterate is less than dimension.}
 
-\item{b_rama}{The scaling coefficients (b[n]) used in RAMA}
+\item{b_rama}{The scaling used in RAMA if norm of the chain at current iterate is greater than dimension.}
 
-\item{method}{The method of adaptation used for generating the chain. May be one of 3 types- Haario,
+\item{M_rama}{The bounds on a_rama and b_rama, lower bound is -M_rama, upper bound is M_rama.}
+
+\item{atchade_low}{The lower bound of scale for Atchade scheme}
+
+\item{atchade_high}{The upper bound of scale for Atchade scheme}
+
+\item{method}{The method of adaptation used for generating the chain. May be one of 3 types- SCAM,
               Atchade and the RAMA methods.}
 
 \item{scale}{The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().

@@ -94,7 +94,7 @@ system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
 
 ```
 
-If the argument `verb` is TRUE, the function will output the progress of the simulation (how many runs of the samples have been completed). Also for the RAMA method, there are additional parameters `a_rama`, `b_rama` and `M_rama`. If these values are not provided by the user, the default value assumed are \begin{verb} a_rama =0 \end{verb}, \begin{verb} b_rama =0 \end{verb} and \begin{verb} M_rama =100 \end{verb}. 
+If the argument `verb` is TRUE, the function will output the progress of the simulation (how many runs of the samples have been completed). Also for the RAMA method, there are additional parameters `a_rama`, `b_rama` and `M_rama`. If these values are not provided by the user, the default value assumed are `a_rama =0`,`b_rama =0` and `M_rama =100`. 
 
 ### Metropolis coupling
 
