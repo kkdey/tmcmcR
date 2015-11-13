@@ -94,7 +94,7 @@ system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
 
 ```
 
-If the argument `verb` is TRUE, the function will output the progress of the simulation (how many runs of the samples have been completed). Also for the RAMA method, there are additional parameters `a_rama`, `b_rama` and `M_rama`. If these values are not provided by the user, the default value assumed are `a_rama =0`,`b_rama =0` and `M_rama =100`. 
+If the argument `verb` is TRUE, the function will output the progress of the simulation (how many runs of the samples have been completed). Also for the RAMA method, there are additional parameters `a_rama`, `b_rama` and `M_rama`. If these values are not provided by the user, the default value assumed are `a_rama =0`, `b_rama =0` and `M_rama =100`. 
 
 ### Metropolis coupling
 
@@ -128,8 +128,8 @@ We first compare the performance of the TMCMC chain and the RWMH chain in terms 
 
 Next we compare the performances of the adaptive versions of TMCMC against the test distribution and see how the three adaptive methods - due to Atchade, SCAM and the RAMA methods perform in comparison to each other. We plot for two randomly selected co-ordinates.
 
-<img src='adaptive_tmcmc_compare.png' style="width:300px;height:200px;">
-<img src='adaptive_tmcmc_compare_2.png' style="width:300px;height:200px;">
+<img src='adapt_tmcmc_compare_version_1.png' style="width:300px;height:200px;">
+<img src='adapt_tmcmc_compare_version_2.png' style="width:300px;height:200px;">
 
 ### Acknowledgements
 

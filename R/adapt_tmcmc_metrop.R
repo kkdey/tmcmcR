@@ -1,4 +1,4 @@
-#' @title Simulate adaptive TMCMC algorithm (Haario, Atchade and RAMA method)
+#' @title Simulate adaptive TMCMC algorithm (SCAM, Atchade and RAMA method)
 #'
 #' @param target_pdf The target density function from which the user wants to generate samples.
 #' @param scale The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
