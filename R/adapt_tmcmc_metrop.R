@@ -22,7 +22,8 @@
 
 
 adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
-                               b_rama=NULL, M_rama =NULL, def.scale =1, method=c("Atchade","Haario","Rama"))
+                               b_rama=NULL, M_rama =NULL, def.scale =1, verb=TRUE,
+                               method=c("Atchade","Haario","Rama"))
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   scale <- def.scale;
@@ -40,8 +41,11 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
                           chain[num,] <- out$chain;
                           scale <- scale + (1/num) *(out$acc_rate - 0.439);
-                          if(num %% 500 ==0)
-                            paste("The chain is at iteration:",num);
+                          if(num %% 500 ==0){
+                            if(verb){
+                              cat("The chain is at iteration:",num);
+                            }
+                          }
                           num <- num + 1;
                           }
   }
@@ -58,13 +62,16 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                             #  store_eps[num] <- eps;
                             #}
                           if(num > 10){
-                            scale <- (2.4)^2 * var(unique(chain[1:num,]) + 0.005);
+                            scale <- sqrt((2.4)^2 * var(unique(chain[1:num,]) + 0.005));
                           }
                           if(num <= 10){
                             scale <- 5;
                           }
-                          if(num %% 500 ==0)
-                            paste("The chain is at iteration:",num);
+                          if(num %% 500 ==0){
+                            if(verb){
+                              cat("The chain is at iteration:",num);
+                            }
+                          }
                             num <- num + 1;
                           }
   }
@@ -93,8 +100,11 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                             if(a_rama <= -M_rama) a_rama <- -M_rama
                           }
                           chain[num,] <- out$chain;
-                          if(num %% 500 ==0)
-                            paste("The chain is at iteration:",num);
+                          if(num %% 500 ==0){
+                            if(verb){
+                            cat("The chain is at iteration:",num);
+                            }
+                          }
                           num <- num + 1;
                         }
 
