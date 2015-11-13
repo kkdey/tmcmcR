@@ -33,7 +33,7 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_i
                                   out <- chain;
                                 if(num > 1)
                                 {
-                                  chain <- rtmc3_chains[[k]][num,];
+                                  chain <- rtmc3_chains[[k]][(num-1),];
                                   eps <- rnorm(1,0,scale);
                                   b <- sample(c(-1,+1),length(base),replace=TRUE)
                                   chain <- tmcmcUpdate(chain,b,eps,target_pdf);

@@ -21,7 +21,7 @@
 
 
 
-rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
+rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in=NULL)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   rmc3_chains <- vector("list", length(beta_set));
@@ -34,7 +34,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
                                out <- chain;
                                if(num > 1)
                                {
-                                 chain <- rmc3_chains[[k]][num,];
+                                 chain <- rmc3_chains[[k]][(num-1),];
                                  eps <- rnorm(1,0,scale);
                                  b <- sample(c(-1,+1),length(base),replace=TRUE)
                                  chain <- rwmhUpdate(chain,b,eps,target_pdf);

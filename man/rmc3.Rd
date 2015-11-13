@@ -4,7 +4,8 @@
 \alias{rmc3}
 \title{Simulate a MC3/RMC3 algorithm (Rcpp sped up version)}
 \usage{
-rmc3(target_pdf, beta_set, scale, base, nsamples, burn_in = NULL)
+rmc3(target_pdf, beta_set, scale, base, nsamples, verb = TRUE,
+  burn_in = NULL)
 }
 \arguments{
 \item{target_pdf}{The log target density function from which the user wants to generate samples.}
