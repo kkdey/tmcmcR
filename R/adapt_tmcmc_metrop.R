@@ -77,12 +77,12 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
   }
   if(method=="Rama"){
                         while(num <= nsamples) {
-                          if (norm(chain[num,],type='2') < sqrt(length(base))){
+                          if (norm(chain[(num-1),],type='2') < sqrt(length(base))){
                             flag <- 0;
-                            scale <- exp(2*a_rama[num])
+                            scale <- exp(2*a_rama)
                           }else{
                             flag <- 1;
-                            scale <- exp(2*b_rama[num])
+                            scale <- exp(2*b_rama)
                           }
                           eps <- abs(rnorm(1,0,scale));
                           b <- sample(c(-1,+1),length(base),replace=TRUE)

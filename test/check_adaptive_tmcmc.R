@@ -9,7 +9,7 @@ library(tmcmcR)
 
 library(mcmc)
 d=50;  ##  dimension of the simulated variable
-L=30; ###   the number of replications we use for finding KS statistic
+L=10; ###   the number of replications we use for finding KS statistic
 nsamples <- 5000;
 Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
@@ -36,9 +36,9 @@ base=rnorm(d,0,1);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Atchade")$chain;
-  Mult_Mattingly[2,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Haario")$chain;
-  Mult_Mattingly[3,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, a_rama = 1, b_rama=1, method="Rama")$chain
+  Mult_Mattingly[1,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Atchade", verb=FALSE)$chain;
+  Mult_Mattingly[2,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Haario", verb=FALSE)$chain;
+  Mult_Mattingly[3,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Rama", verb=FALSE)$chain
   cat("We are at iter:",l, "\n")
 }
 
