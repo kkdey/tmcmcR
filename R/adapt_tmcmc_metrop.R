@@ -51,18 +51,19 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
   }
   if(method=="SCAM"){
                         scale <- 5;
+                        store_eps <- array(0, nsamples);
                         while(num <= nsamples) {
                           eps <- abs(rnorm(1,0,scale));
                           b <- sample(c(-1,+1),length(base),replace=TRUE)
                           out <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)
                           chain[num,] <- out$chain;
-                           # if(min(abs(out$chain-chain[num,]))==0){
-                          #    store_eps[num] <- store_eps[(num-1)];
-                           # } else{
-                            #  store_eps[num] <- eps;
-                            #}
+                          if(min(abs(out$chain-chain[num,]))==0){
+                             store_eps[num] <- store_eps[(num-1)];
+                            } else{
+                              store_eps[num] <- eps;
+                            }
                           if(num > 10){
-                            scale <- sqrt((2.4)^2 * var(chain[1:num,]) + 0.005);
+                            scale <- sqrt((2.4)^2 * var(store_eps[1:num]) + 0.005);
                           }
                           if(num <= 10){
                             scale <- 5;
