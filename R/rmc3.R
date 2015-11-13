@@ -56,7 +56,9 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
       }
     }
     if(num %% 500 ==0){
-      paste("The chains are at iteration:",num);
+      if(verb){
+        cat("The chain is at iteration:",num);
+      }
     }
     num <- num + 1;
   }

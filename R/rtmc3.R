@@ -20,7 +20,7 @@
 
 
 
-rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
+rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in=NULL)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   rtmc3_chains <- vector("list", length(beta_set));
@@ -55,7 +55,9 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, burn_in=NULL)
     }
   }
     if(num %% 500 ==0){
-      paste("The chains are at iteration:",num);
+      if(verb){
+        cat("The chain is at iteration:",num);
+      }
     }
     num <- num + 1;
   }
