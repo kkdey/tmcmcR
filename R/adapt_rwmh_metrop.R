@@ -53,16 +53,16 @@ adapt_rwmh_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=N
                             }
                         }
   if(method=="SCAM"){
-                        scale <- 5;
+                        scale_vec <- rep(5, length(base));
                         while(num <= nsamples) {
-                          eps <- rnorm(length(base),0,scale);
+                          eps <- rnorm(length(base),0,scale_vec);
                           out <- rwmhUpdate(chain[(num-1),],eps,target_pdf)
                           chain[num,] <- out$chain;
                           if(num > 10){
-                              scale <- sqrt((2.4)^2 * apply(chain[1:num,], 2, var) + 0.005);
+                              scale_vec <- sqrt((2.4)^2 * apply(chain[1:num,], 2, var) + 0.005);
                               }
                           if(num <= 10){
-                              scale <- 5;
+                              scale_vec <- rep(5, length(base));
                               }
                           if(num %% 500 ==0){
                               if(verb){
