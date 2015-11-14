@@ -30,7 +30,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in
   rmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){
-    rmc3_chains <- parallel::mclapply(1:length(beta_set),
+    chain_set <- parallel::mclapply(1:length(beta_set),
                              function(k){
                                if(num==1){
                                  chain <- t(as.matrix(base, nrow=1));
@@ -47,17 +47,21 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in
                              }, mc.cores=detectCores()
     )
 
-    for(k in 2:length(beta_set))
+    rmc3_chains <- chain_set;
+
+    if(num %% cycle ==0)
     {
-      chain1 <- rmc3_chains[[k]][num,];
-      chain2 <- rmc3_chains[[k-1]][num,];
+      indices <- sample(1:length(beta_set), 2);
+      chain1 <- rmc3_chains[[k]][indices[1],];
+      chain2 <- rmc3_chains[[k-1]][indices[2],];
       swap_rate <- min(1, exp((beta_set[k] - beta_set[(k-1)])*(target_pdf(chain2)-target_pdf(chain1))));
       w <- runif(1,0,1)
       if(w < swap_rate){
-        rmc3_chains[[k]][num,] <- chain2;
-        rmc3_chains[[k-1]][num,] <- chain1;
+        rmc3_chains[[indices[1]]][num,] <- chain2;
+        rmc3_chains[[indices[2]]][num,] <- chain1;
       }
     }
+
     if(num %% 500 ==0){
       if(verb){
         cat("The chain is at iteration:",num);

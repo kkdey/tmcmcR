@@ -8,7 +8,7 @@ library(tmcmcR)
 
 library(mcmc)
 d=50;  ##  dimension of the simulated variable
-L=10; ###   the number of replications we use for finding KS statistic
+L=20; ###   the number of replications we use for finding KS statistic
 nsamples <- 5000;
 Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
@@ -31,12 +31,12 @@ pdf = function(x)
 }
 
 base=rnorm(d,0,1);
-beta_set <- seq(1,0.05,length.out=20);
+beta_set <- seq(1,0.05,length.out=10);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, scale=1, nsamples=5000, verb=FALSE)$chain;
-  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, scale=1, nsamples=5000, verb=FALSE)$chain;
+  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, scale=1, nsamples=2000, verb=FALSE)$chain;
+  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, scale=1, nsamples=2000, verb=FALSE)$chain;
   cat("We are at iter:",l, "\n")
 }
 
