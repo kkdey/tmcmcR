@@ -24,21 +24,24 @@
 rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in=NULL)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
+  if(is.null(scale)) stop("scale value not provided")
+  if(is.null(beta_set)) stop("set of inverse temperatures not provided")
+
   rmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){
     rmc3_chains <- parallel::mclapply(1:length(beta_set),
                              function(k){
-                               if(num==1)
+                               if(num==1){
                                  chain <- t(as.matrix(base, nrow=1));
-                               out <- chain;
+                                 out <- chain;
+                               }
                                if(num > 1)
                                {
-                                 chain <- rmc3_chains[[k]][(num-1),];
-                                 eps <- rnorm(1,0,scale);
-                                 b <- sample(c(-1,+1),length(base),replace=TRUE)
-                                 chain <- rwmhUpdate(chain,b,eps,target_pdf);
-                                 out <- rbind(rmc3_chains[[k]],chain);
+                                 temp_chain <- rmc3_chains[[k]][(num-1),];
+                                 eps <- rnorm(length(temp_chain),0,scale);
+                                 temp_chain <- rwmhUpdate(temp_chain,eps,target_pdf)$chain;
+                                 out <- rbind(rmc3_chains[[k]],as.vector(temp_chain));
                                }
                                return(out)
                              }, mc.cores=detectCores()

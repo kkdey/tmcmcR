@@ -23,6 +23,7 @@ Mattingly_matrix <- 100*(diag(1-0.7,d)+0.7*rep(1,d)%*%t(rep(1,d)));
 library(mnormt)
 library(fMultivar)
 library(mvtnorm)
+library(parallel)
 
 pdf = function(x)
 {

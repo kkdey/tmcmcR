@@ -26,22 +26,24 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_i
   rtmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){
-    rtmc3_chains <- parallel::mclapply(1:length(beta_set),
+    chain_set <- parallel::mclapply(1:length(beta_set),
                   function(k){
-                                if(num==1)
+                                if(num==1){
                                   chain <- t(as.matrix(base, nrow=1));
                                   out <- chain;
+                                }
                                 if(num > 1)
                                 {
-                                  chain <- rtmc3_chains[[k]][(num-1),];
-                                  eps <- rnorm(1,0,scale);
+                                  temp_chain <- rtmc3_chains[[k]][(num-1),];
+                                  eps <- abs(rnorm(1,0,scale));
                                   b <- sample(c(-1,+1),length(base),replace=TRUE)
-                                  chain <- tmcmcUpdate(chain,b,eps,target_pdf);
-                                  out <- rbind(rtmc3_chains[[k]],chain);
+                                  temp_chain <- tmcmcUpdate(temp_chain,b,eps,target_pdf)$chain;
+                                  out <- rbind(rtmc3_chains[[k]],as.vector(temp_chain));
                                  }
                                  return(out)
                               }, mc.cores=detectCores()
                           )
+    rtmc3_chains <- chain_set;
 
   for(k in 2:length(beta_set))
   {
