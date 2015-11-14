@@ -4,7 +4,7 @@
 \alias{rmc3}
 \title{Simulate a MC3/RMC3 algorithm (Rcpp sped up version)}
 \usage{
-rmc3(target_pdf, beta_set, scale, base, nsamples, verb = TRUE,
+rmc3(target_pdf, beta_set, scale, base, nsamples, cycle, verb = TRUE,
   burn_in = NULL)
 }
 \arguments{

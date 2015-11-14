@@ -21,7 +21,7 @@
 
 
 
-rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in=NULL)
+rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE, burn_in=NULL)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   if(is.null(scale)) stop("scale value not provided")
