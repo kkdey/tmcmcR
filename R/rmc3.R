@@ -27,10 +27,10 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in
   rmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){
-    rmc3_chains <- mclapply(1:length(beta_set),
+    rmc3_chains <- parallel::mclapply(1:length(beta_set),
                              function(k){
                                if(num==1)
-                                 chain <- base;
+                                 chain <- t(as.matrix(base, nrow=1));
                                out <- chain;
                                if(num > 1)
                                {
@@ -41,7 +41,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in
                                  out <- rbind(rmc3_chains[[k]],chain);
                                }
                                return(out)
-                             }
+                             }, mc.cores=detectCores()
     )
 
     for(k in 2:length(beta_set))
@@ -49,7 +49,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in
       chain1 <- rmc3_chains[[k]][num,];
       chain2 <- rmc3_chains[[k-1]][num,];
       swap_rate <- min(1, exp((beta_set[k] - beta_set[(k-1)])*(target_pdf(chain2)-target_pdf(chain1))));
-      w <- runif(0,1)
+      w <- runif(1,0,1)
       if(w < swap_rate){
         rmc3_chains[[k]][num,] <- chain2;
         rmc3_chains[[k-1]][num,] <- chain1;
