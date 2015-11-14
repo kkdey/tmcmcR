@@ -23,6 +23,9 @@
 rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, verb=TRUE, burn_in=NULL)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
+  if(is.null(scale)) stop("scale value not provided")
+  if(is.null(beta_set)) stop("set of inverse temperatures not provided")
+
   rtmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){

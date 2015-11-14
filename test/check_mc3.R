@@ -35,8 +35,9 @@ beta_set <- seq(1,0.05,length.out=20);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, nsamples=5000, verb=FALSE)$chain;
-  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, nsamples=5000, verb=FALSE)$chain;
+  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, scale=1, nsamples=5000, verb=FALSE)$chain;
+  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, scale=1, nsamples=5000, verb=FALSE)$chain;
+  cat("We are at iter:",l, "\n")
 }
 
 KSval1=array(0,nsamples);
