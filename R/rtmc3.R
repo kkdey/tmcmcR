@@ -39,8 +39,8 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
                                 {
                                   temp_chain <- rtmc3_chains[[k]][(num-1),];
                                   eps <- abs(rnorm(1,0,scale));
-                                  b <- sample(c(-1,+1),length(base),replace=TRUE)
-                                  temp_chain <- tmcmcUpdate(temp_chain,b,eps,target_pdf)$chain;
+                                  b <- sample(c(-1,+1),length(base),replace=TRUE);
+                                  temp_chain <- tmcmcUpdate(temp_chain,b,eps,function(x) return(beta_set[k]*target_pdf(x)))$chain;
                                   out <- rbind(rtmc3_chains[[k]],as.vector(temp_chain));
                                  }
                                  return(out)

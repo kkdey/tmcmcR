@@ -40,7 +40,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE, 
                                {
                                  temp_chain <- rmc3_chains[[k]][(num-1),];
                                  eps <- rnorm(length(temp_chain),0,scale);
-                                 temp_chain <- rwmhUpdate(temp_chain,eps,target_pdf)$chain;
+                                 temp_chain <- rwmhUpdate(temp_chain,eps,function(x) return(beta_set[k]*target_pdf(x)))$chain;
                                  out <- rbind(rmc3_chains[[k]],as.vector(temp_chain));
                                }
                                return(out)
