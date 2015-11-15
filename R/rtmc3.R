@@ -20,7 +20,8 @@
 
 
 
-rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE, burn_in=NULL)
+rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
+                  swap_adjacent=TRUE, burn_in=NULL)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   if(is.null(scale)) stop("scale value not provided")
@@ -50,7 +51,15 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
 
     if(num %% cycle ==0)
     {
-      indices <- sample(1:length(beta_set), 2);
+      if(swap_adjacent)
+      {
+        index_select <- sample(2:length(beta_set), 1);
+        indices <- c(index_select-1, index_select);
+      }
+      if(!swap_adjacent)
+      {
+        indices <- sample(1:length(beta_set), 2);
+      }
       chain1 <- rtmc3_chains[[k]][indices[1],];
       chain2 <- rtmc3_chains[[k-1]][indices[2],];
       swap_rate <- min(1, exp((beta_set[k] - beta_set[(k-1)])*(target_pdf(chain2)-target_pdf(chain1))));

@@ -5,7 +5,7 @@
 \title{Simulate a Randomized Transformation based MC3 algorithm (Rcpp sped up version)}
 \usage{
 rtmc3(target_pdf, beta_set, scale, base, nsamples, cycle, verb = TRUE,
-  burn_in = NULL)
+  swap_adjacent = TRUE, burn_in = NULL)
 }
 \arguments{
 \item{target_pdf}{The log target density function from which the user wants to generate samples.}
