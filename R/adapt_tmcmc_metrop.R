@@ -48,7 +48,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           if(scale > atchade_high) scale <- atchade_high;
                           if(num %% 500 ==0){
                             if(verb){
-                              cat("The chain is at iteration:",num);
+                              cat("The chain is at iteration:",num,"\n");
                             }
                           }
                           num <- num + 1;
@@ -75,7 +75,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           }
                           if(num %% 500 ==0){
                             if(verb){
-                              cat("The chain is at iteration:",num);
+                              cat("The chain is at iteration:",num,"\n");
                             }
                           }
                             num <- num + 1;
@@ -111,7 +111,7 @@ adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=
                           chain[num,] <- out$chain;
                           if(num %% 500 ==0){
                             if(verb){
-                            cat("The chain is at iteration:",num);
+                            cat("The chain is at iteration:",num,"\n");
                             }
                           }
                           num <- num + 1;

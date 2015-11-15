@@ -64,7 +64,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE, 
 
     if(num %% 500 ==0){
       if(verb){
-        cat("The chain is at iteration:",num);
+        cat("The chain is at iteration:",num,"\n");
       }
     }
     num <- num + 1;

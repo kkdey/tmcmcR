@@ -30,7 +30,7 @@ tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
     b <- sample(c(-1,+1),length(base),replace=TRUE)
     chain[num,] <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)$chain;
     if(num %% 500 == 0)
-      paste("The chain is at iteration:",num);
+      cat("The chain is at iteration:",num,"\n");
     num <- num + 1;
   }
   posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
