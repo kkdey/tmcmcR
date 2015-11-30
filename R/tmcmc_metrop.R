@@ -19,7 +19,7 @@
 #'  @export
 
 
-tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
+tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, verb=TRUE)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
@@ -29,8 +29,10 @@ tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
     eps <- rnorm(1,0,scale);
     b <- sample(c(-1,+1),length(base),replace=TRUE)
     chain[num,] <- tmcmcUpdate(chain[(num-1),],b,eps,target_pdf)$chain;
+    if(verb){
     if(num %% 500 == 0)
       cat("The chain is at iteration:",num,"\n");
+    }
     num <- num + 1;
   }
   if(length(base) > 1)
