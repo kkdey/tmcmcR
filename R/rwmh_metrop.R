@@ -18,7 +18,7 @@
 #'  @export
 
 
-rwmh_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
+rwmh_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, verb=TRUE)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
@@ -27,11 +27,16 @@ rwmh_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
   while(num <= nsamples) {
     eps <- rnorm(length(base),0,scale);
     chain[num,] <- rwmhUpdate(chain[(num-1),],eps,target_pdf)$chain
+    if(verb){
     if(num %% 500 ==0)
       cat("The chain is at iteration:",num,"\n");
+    }
     num <- num +1;
   }
-  posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
+  if(length(base) > 1)
+    posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
+  if(length(base)==1)
+    posterior_mean <- mean(chain[round(burn_in):nsamples,]);
   ll <- list("chain"=chain,"post.mean"=posterior_mean);
   return(ll)
 }

@@ -78,7 +78,10 @@ rtmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
     num <- num + 1;
   }
 
-  posterior_mean <- apply(rtmc3_chains[[1]][round(burn_in):nsamples,], 2, mean);
+  if(length(base) > 1)
+    posterior_mean <- apply(rtmc3_chains[[1]][round(burn_in):nsamples,], 2, mean);
+  if(length(base)==1)
+    posterior_mean <- mean(rtmc3_chains[[1]][round(burn_in):nsamples,]);
   ll <- list("chain_set"=rtmc3_chains,"post.mean"=posterior_mean);
   return(ll)
 }

@@ -108,7 +108,10 @@ adapt_rwmh_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=N
                         }
 
                   }
-  posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
+  if(length(base) > 1)
+    posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
+  if(length(base)==1)
+    posterior_mean <- mean(chain[round(burn_in):nsamples,]);
   ll <- list("chain"=chain,"post.mean"=posterior_mean);
   return(ll)
 }
