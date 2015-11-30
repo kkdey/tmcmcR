@@ -33,7 +33,10 @@ tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL)
       cat("The chain is at iteration:",num,"\n");
     num <- num + 1;
   }
+  if(length(base) > 1)
   posterior_mean <- apply(chain[round(burn_in):nsamples,],2,mean);
+  if(length(base)==1)
+  posterior_mean <- mean(chain[round(burn_in):nsamples,]);
   ll <- list("chain"=chain,"post.mean"=posterior_mean);
   return(ll)
 }
