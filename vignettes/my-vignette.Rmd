@@ -1,6 +1,6 @@
 ---
 title: "tmcmcR:  R package for sampling with improved coverage"
-author: "Kushal K Dey"
+author: "Kushal K Dey, Sourabh Bhattacharya"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
