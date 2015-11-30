@@ -17,14 +17,16 @@
 
 select_inverse_temp <- function(pdf_component, minbeta=0.05, L_iter =50,
                                 sim_method=c("RWMH","TMCMC"),
-                                inv_temp_scheme = c("randomized","fixed"))
+                                inv_temp_scheme = c("randomized","fixed"),
+                                rho_start=0,
+                                scale=0.1)
 {
   beta_array <- 1;
   counter <- 1
   current_beta = 1;
   while(current_beta > minbeta)
   {
-    rho <- 0;
+    rho <- rho_start;
     for (l in 1:L_iter)
     {
       temp_beta <- current_beta * (1/(1 + exp(rho)));
@@ -37,9 +39,9 @@ select_inverse_temp <- function(pdf_component, minbeta=0.05, L_iter =50,
       B <- -(temp_beta - current_beta)* (pdf_2(x_temp) - pdf_1(x_curr));
       alpha <- min(1, exp(B));
       if(inv_temp_scheme=="randomized")
-        rho <- rho + (1/l) * (alpha - 0.44);
+        rho <- rho + (scale/l) * (alpha - 0.44);
       if(inv_temp_scheme=="fixed")
-        rho <- rho + (1/l) * (alpha - 0.234);
+        rho <- rho + (scale/l) * (alpha - 0.234);
     }
 
     current_beta <- current_beta * (1/(1 + exp(rho)));
@@ -47,5 +49,5 @@ select_inverse_temp <- function(pdf_component, minbeta=0.05, L_iter =50,
     beta_array <- c(beta_array, current_beta);
     counter <- counter + 1;
   }
-  return(rev(beta_array))
+  return(beta_array)
 }
