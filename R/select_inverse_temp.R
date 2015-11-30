@@ -28,13 +28,13 @@ select_inverse_temp <- function(pdf_component, minbeta=0.05, L_iter =50,
     for (l in 1:L_iter)
     {
       temp_beta <- current_beta * (1/(1 + exp(rho)));
-      pdf_1 <- function(x, current_beta = current_beta) { return(pdf_component(x)*current_beta)};
-      pdf_2 <- function(x, temp_beta=temp_beta) { return(pdf_component(x)*temp_beta)};
+      pdf_1 <- function(x) { return(pdf_component(x)*current_beta)};
+      pdf_2 <- function(x) { return(pdf_component(x)*temp_beta)};
 
       x_curr <- .rand_generate(pdf_1, method=sim_method);
       x_temp <- .rand_generate(pdf_2, method=sim_method);
 
-      B <- -(temp_beta - current_beta)* (pdf_2(x_temp,temp_beta) - pdf1(x_curr, current_beta));
+      B <- -(temp_beta - current_beta)* (pdf_2(x_temp) - pdf_1(x_curr));
       alpha <- min(1, exp(B));
       if(inv_temp_scheme=="randomized")
         rho <- rho + (1/l) * (alpha - 0.44);
