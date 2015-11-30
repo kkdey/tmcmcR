@@ -1,7 +1,0 @@
-name: Publish Document
-account: rpubs
-server: rpubs.com
-bundleId:
-        https://api.rpubs.com/api/v1/document/123141/941b8386f936464d85ed0ea15d00c446
-url: http://rpubs.com/kkdey/123141
-when: 1447431167.84456

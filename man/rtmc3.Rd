@@ -4,8 +4,8 @@
 \alias{rtmc3}
 \title{Simulate a Randomized Transformation based MC3 algorithm (Rcpp sped up version)}
 \usage{
-rtmc3(target_pdf, beta_set, scale, base, nsamples, cycle, verb = TRUE,
-  swap_adjacent = TRUE, burn_in = NULL)
+rtmc3(target_pdf, beta_set, scale, base, nsamples, cycle = NULL,
+  verb = TRUE, swap_adjacent = TRUE, burn_in = NULL)
 }
 \arguments{
 \item{target_pdf}{The log target density function from which the user wants to generate samples.}
@@ -18,6 +18,9 @@ The default scale is this estimated optimal scaling}
 \item{base}{The starting value of the chain}
 
 \item{nsamples}{The number of samples to be drawn.}
+
+\item{cycle}{The number of iterations of TMCMC chaining that is followed by a swap, or gap between consecutive
+swaps. Default is nsamples *0.01, rounded to next integer.}
 
 \item{verb}{logical parameter, if TRUE the function prints the progress of simulation.}
 

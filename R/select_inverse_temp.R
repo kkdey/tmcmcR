@@ -7,7 +7,7 @@
 #'        temperature. Helps to check the lower bound of the inverse temperatures. Default is 0.01.
 #' @param L_iter The number of sub-iterations required to fix each iterate of the inverse temperatures
 #' @param sim_method The method used to simulate from the marginal pdf component. Choices include TMCMC and RWMH.
-#' @param The selection of inverse temperatures scheme followed, affects the stochastic approximation
+#' @param inv_temp_scheme The selection of inverse temperatures scheme followed, affects the stochastic approximation
 #'        driving the inverse temperature updates. Choices include "fixed" and "randomized".
 #' @param rho_start The scale update for the inverse temperature selection. Default is 0.
 #' @param scale The stochastic approximation scaling parameter. Default is 0.1. The smaller this value,

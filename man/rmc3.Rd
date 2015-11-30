@@ -19,6 +19,9 @@ The default scale is this estimated optimal scaling}
 
 \item{nsamples}{The number of samples to be drawn.}
 
+\item{cycle}{The number of iterations of RWMH chaining that is followed by a swap, or gap between consecutive
+swaps.Default is nsamples *0.01, rounded to next integer}
+
 \item{verb}{logical parameter, if TRUE the function prints the progress of simulation.}
 
 \item{swap_adjacent}{logical parameter, whether we allow for swaps between only consecutive inverse temperatures or any

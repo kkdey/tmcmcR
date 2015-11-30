@@ -18,13 +18,13 @@ temperature. Helps to check the lower bound of the inverse temperatures. Default
 
 \item{sim_method}{The method used to simulate from the marginal pdf component. Choices include TMCMC and RWMH.}
 
+\item{inv_temp_scheme}{The selection of inverse temperatures scheme followed, affects the stochastic approximation
+driving the inverse temperature updates. Choices include "fixed" and "randomized".}
+
 \item{rho_start}{The scale update for the inverse temperature selection. Default is 0.}
 
 \item{scale}{The stochastic approximation scaling parameter. Default is 0.1. The smaller this value,
        more inverse temperatures will be selected and algorithm will be more fine-grained.}
-
-\item{The}{selection of inverse temperatures scheme followed, affects the stochastic approximation
-driving the inverse temperature updates. Choices include "fixed" and "randomized".}
 }
 \value{
 Returns a vector of inverse temperatures starting from 1 and ending at the first value of inverse

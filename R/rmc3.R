@@ -9,6 +9,8 @@
 #'              The default scale is this estimated optimal scaling
 #' @param base The starting value of the chain
 #' @param nsamples The number of samples to be drawn.
+#' @param cycle The number of iterations of RWMH chaining that is followed by a swap, or gap between consecutive
+#'        swaps.Default is nsamples *0.01, rounded to next integer
 #' @param swap_adjacent logical parameter, whether we allow for swaps between only consecutive inverse temperatures or any
 #'        randomly chosen inverse temperatures pair. Default is TRUE.
 #' @param burn_in The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.
@@ -50,7 +52,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
                                  out <- rbind(rmc3_chains[[k]],as.vector(temp_chain));
                                }
                                return(out)
-                             }, mc.cores=detectCores()
+                             }, mc.cores=parallel::detectCores()
     )
 
     rmc3_chains <- chain_set;

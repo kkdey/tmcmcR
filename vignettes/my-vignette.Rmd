@@ -131,7 +131,7 @@ For RTMC3, one can define the `beta_set` to be the output array of inverse tempe
 ```{r echo=TRUE, eval=FALSE}
 
 base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
-out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, nsamples=5000, verb=FALSE)
+out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
 
 ```
 
