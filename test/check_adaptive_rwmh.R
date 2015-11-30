@@ -9,7 +9,7 @@ library(tmcmcR)
 library(mcmc)
 d=50;  ##  dimension of the simulated variable
 L=30; ###   the number of replications we use for finding KS statistic
-nsamples <- 5000;
+#nsamples <- 2000;
 Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
 

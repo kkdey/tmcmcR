@@ -31,8 +31,8 @@ select_inverse_temp <- function(pdf_component, minbeta=0.05, L_iter =50,
       pdf_1 <- function(x, current_beta = current_beta) { return(pdf_component(x)*current_beta)};
       pdf_2 <- function(x, temp_beta=temp_beta) { return(pdf_component(x)*temp_beta)};
 
-      x_curr <- .rand_generate(pdf_1, method=method);
-      x_temp <- .rand_generate(pdf_2, method=method);
+      x_curr <- .rand_generate(pdf_1, method=sim_method);
+      x_temp <- .rand_generate(pdf_2, method=sim_method);
 
       B <- -(temp_beta - current_beta)* (pdf_2(x_temp,temp_beta) - pdf1(x_curr, current_beta));
       alpha <- min(1, exp(B));

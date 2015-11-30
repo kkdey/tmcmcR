@@ -7,9 +7,9 @@ library(devtools)
 library(tmcmcR)
 
 library(mcmc)
-d=50;  ##  dimension of the simulated variable
-L=10; ###   the number of replications we use for finding KS statistic
-nsamples <- 5000;
+d=10;  ##  dimension of the simulated variable
+L=30; ###   the number of replications we use for finding KS statistic
+nsamples <- 2000;
 Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
 
@@ -35,17 +35,17 @@ beta_set <- seq(1,0.05,length.out=10);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, scale=1, cycle=100,
-                                 swap_adjacent=TRUE, nsamples=5000, verb=FALSE)$chain_set[[1]];
-  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, scale=1, cycle=100,
-                                swap_adjacent=TRUE, nsamples=5000, verb=FALSE)$chain_set[[1]];
+  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, scale=1, cycle=20,
+                                 swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]];
+  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, scale=1, cycle=20,
+                                swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]];
   cat("We are at iter:",l, "\n")
 }
 
 KSval1=array(0,nsamples);
 KSval2=array(0,nsamples);
 
-for(d in 1:40)
+for(d in 1:10)
 {
   for(n in 1:nsamples)
   {
