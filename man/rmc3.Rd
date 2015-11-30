@@ -10,14 +10,26 @@ rmc3(target_pdf, beta_set, scale, base, nsamples, cycle, verb = TRUE,
 \arguments{
 \item{target_pdf}{The log target density function from which the user wants to generate samples.}
 
+\item{beta_set}{The vector of inverse temperatures used (see select_inverse_temp() function to choose this vector appropriately).}
+
 \item{scale}{The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
 The default scale is this estimated optimal scaling}
 
 \item{base}{The starting value of the chain}
 
-\item{nsamples}{The number of samples to be drawn using the TMCMC algorithm.}
+\item{nsamples}{The number of samples to be drawn.}
+
+\item{verb}{logical parameter, if TRUE the function prints the progress of simulation.}
+
+\item{swap_adjacent}{logical parameter, whether we allow for swaps between only consecutive inverse temperatures or any
+randomly chosen inverse temperatures pair. Default is TRUE.}
 
 \item{burn_in}{The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.}
+}
+\value{
+Returns a list containing the following items
+\item{chain_set}{A list of chains at different underlying inverse temperatures produced by the MC3/RMC3 algorithm.}
+\item{post.mean}{The estimated posterior mean for the principal chain (inverse temp=1) adjusting for burn-in.}
 }
 \description{
 The function simulates a MC3/RMC3 chain of length nsamples using the scale, base and burn in taken optimally as default or specified by user.

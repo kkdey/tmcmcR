@@ -4,7 +4,7 @@
 \alias{rwmh_metrop}
 \title{Simulate a Random Walk Metropolis Hastings algorithm (Rcpp sped up version)}
 \usage{
-rwmh_metrop(target_pdf, scale, base, nsamples, burn_in = NULL)
+rwmh_metrop(target_pdf, scale, base, nsamples, burn_in = NULL, verb = TRUE)
 }
 \arguments{
 \item{target_pdf}{The target density function from which the user wants to generate samples.}
@@ -17,6 +17,13 @@ The default scale is this estimated optimal scaling}
 \item{nsamples}{The number of samples to be drawn using the RWMH algorithm.}
 
 \item{burn_in}{The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.}
+
+\item{verb}{logical parameter, if TRUE the function prints the progress of simulation.}
+}
+\value{
+Returns a list containing the following items
+\item{chain}{The full chain produced by the RWMH method.}
+\item{post.mean}{The estimated posterior mean of the RWMH chain adjusting for burn-in.}
 }
 \description{
 The function simulates a RWMH chain of length nsamples using the scale, base and burn in taken optimally as default or specified by user. The function

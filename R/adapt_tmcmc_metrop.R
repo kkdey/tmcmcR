@@ -1,10 +1,11 @@
 #' @title Simulate adaptive TMCMC algorithm (SCAM, Atchade and RAMA method)
+#' @description The function simulates adaptive TMCMC chain of length nsamples using one of the three
+#'              methods of adaptation - SCAM, Atchade and RAMA (analogously defined as in RWMH case).
 #'
 #' @param target_pdf The target density function from which the user wants to generate samples.
-#' @param scale The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
-#'              The default scale is this estimated optimal scaling
 #' @param base The starting value of the chain
 #' @param nsamples The number of samples to be drawn using the TMCMC algorithm.
+#' @param def.scale the initial scale of the proposal chosen, on which we update adaptively. Default is 1.
 #' @param burn_in The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.
 #' @param a_rama The scaling used in RAMA if norm of the chain at current iterate is less than dimension.
 #' @param b_rama The scaling used in RAMA if norm of the chain at current iterate is greater than dimension.
@@ -13,9 +14,11 @@
 #' @param atchade_high The upper bound of scale for Atchade scheme
 #' @param method The method of adaptation used for generating the chain. May be one of 3 types- SCAM,
 #'               Atchade and the RAMA methods.
+#' @param verb logical parameter, if TRUE the function prints the progress of simulation.
 #'
-#' @description The function simulates adaptive TMCMC chain of length nsamples using one of the three methods of adaptation - Haario, Atchade and RAMA.
-#'              The other inputs and the output same as tmcmc_metrop function.
+#' @return Returns a list containing the following items
+#' \item{chain}{The full chain produced by the adaptive TMCMC method with user-chosen method of adaptation.}
+#' \item{post.mean}{The estimated posterior mean of the adaptive TMCMC chain adjusting for burn-in.}
 #'
 #
 #'  @author  Kushal K Dey
@@ -24,10 +27,11 @@
 #'  @export
 
 
-adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, burn_in=NULL, a_rama=NULL,
-                               b_rama=NULL, M_rama =NULL, def.scale =1, verb=TRUE,
+adapt_tmcmc_metrop <- function(target_pdf, base, nsamples, def.scale =1,burn_in=NULL, a_rama=NULL,
+                               b_rama=NULL, M_rama =NULL,
                                atchade_low = NULL, atchade_high=NULL,
-                               method=c("Atchade","SCAM","Rama"))
+                               method=c("Atchade","SCAM","Rama"),
+                               verb=TRUE)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   scale <- def.scale;

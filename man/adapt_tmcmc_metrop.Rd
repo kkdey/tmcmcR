@@ -4,10 +4,10 @@
 \alias{adapt_tmcmc_metrop}
 \title{Simulate adaptive TMCMC algorithm (SCAM, Atchade and RAMA method)}
 \usage{
-adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
-  a_rama = NULL, b_rama = NULL, M_rama = NULL, def.scale = 1,
-  verb = TRUE, atchade_low = NULL, atchade_high = NULL,
-  method = c("Atchade", "SCAM", "Rama"))
+adapt_tmcmc_metrop(target_pdf, base, nsamples, def.scale = 1,
+  burn_in = NULL, a_rama = NULL, b_rama = NULL, M_rama = NULL,
+  atchade_low = NULL, atchade_high = NULL, method = c("Atchade", "SCAM",
+  "Rama"), verb = TRUE)
 }
 \arguments{
 \item{target_pdf}{The target density function from which the user wants to generate samples.}
@@ -15,6 +15,8 @@ adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
 \item{base}{The starting value of the chain}
 
 \item{nsamples}{The number of samples to be drawn using the TMCMC algorithm.}
+
+\item{def.scale}{the initial scale of the proposal chosen, on which we update adaptively. Default is 1.}
 
 \item{burn_in}{The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.}
 
@@ -29,14 +31,18 @@ adapt_tmcmc_metrop(target_pdf, base, nsamples, burn_in = NULL,
 \item{atchade_high}{The upper bound of scale for Atchade scheme}
 
 \item{method}{The method of adaptation used for generating the chain. May be one of 3 types- SCAM,
-              Atchade and the RAMA methods.}
+Atchade and the RAMA methods.}
 
-\item{scale}{The proposal density scaling parameter. An approximation of the optimal scaling given the target_pdf is performed by OptimalScaling().
-The default scale is this estimated optimal scaling}
+\item{verb}{logical parameter, if TRUE the function prints the progress of simulation.}
+}
+\value{
+Returns a list containing the following items
+\item{chain}{The full chain produced by the adaptive TMCMC method with user-chosen method of adaptation.}
+\item{post.mean}{The estimated posterior mean of the adaptive TMCMC chain adjusting for burn-in.}
 }
 \description{
-The function simulates adaptive TMCMC chain of length nsamples using one of the three methods of adaptation - Haario, Atchade and RAMA.
-             The other inputs and the output same as tmcmc_metrop function.
+The function simulates adaptive TMCMC chain of length nsamples using one of the three
+             methods of adaptation - SCAM, Atchade and RAMA (analogously defined as in RWMH case).
 }
 \author{
 Kushal K Dey

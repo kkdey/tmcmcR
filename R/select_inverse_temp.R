@@ -1,13 +1,20 @@
 #' @title Select inverse temperatures in RMC3 and RTMC3
-#'
-#'
-#' @param pdf_component The marginal distribution of the iid product component target distribution
-#' @param minbeta the minimum cut off of inverse temperature we allow in RMC3 or RTMC3 (default is 0.05)
-#' @param L_iter The number of sub-iterations required to fix each iterate of the inverse temperatures
-#' @param method The method used to simulate from the marginal pdf component. Choices include TMCMC and RWMH.
-#'
 #' @description The function selects the inverse temperatures using a Stochastic approximation
 #' algorithm for RMC3 or RTMC3 chains.
+#'
+#' @param pdf_component The univariate marginal distribution of the iid product component target distribution
+#' @param minbeta the cut off of inverse temperature which when crossed, we stop at that value of inverse
+#'        temperature. Helps to check the lower bound of the inverse temperatures. Default is 0.01.
+#' @param L_iter The number of sub-iterations required to fix each iterate of the inverse temperatures
+#' @param sim_method The method used to simulate from the marginal pdf component. Choices include TMCMC and RWMH.
+#' @param The selection of inverse temperatures scheme followed, affects the stochastic approximation
+#'        driving the inverse temperature updates. Choices include "fixed" and "randomized".
+#' @param rho_start The scale update for the inverse temperature selection. Default is 0.
+#' @param scale The stochastic approximation scaling parameter. Default is 0.1. The smaller this value,
+#'        more inverse temperatures will be selected and algorithm will be more fine-grained.
+#'
+#' @return Returns a vector of inverse temperatures starting from 1 and ending at the first value of inverse
+#'        temperature smaller than minbeta.
 #'
 #' @author  Kushal K Dey
 #'
@@ -15,7 +22,7 @@
 #'
 
 
-select_inverse_temp <- function(pdf_component, minbeta=0.05, L_iter =50,
+select_inverse_temp <- function(pdf_component, minbeta=0.01, L_iter =50,
                                 sim_method=c("RWMH","TMCMC"),
                                 inv_temp_scheme = c("randomized","fixed"),
                                 rho_start=0,
