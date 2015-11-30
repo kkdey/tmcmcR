@@ -69,13 +69,13 @@ base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
 For running the general RWMH chain, use the `rwmh_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000))
+system.time(out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 To run the TMCMC chain, use the `tmcmc_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000))
+system.time(out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 ### Adaptive version
@@ -131,7 +131,7 @@ For RTMC3, one can define the `beta_set` to be the output array of inverse tempe
 ```{r echo=TRUE, eval=FALSE}
 
 base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
-out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, nsamples=5000)
+out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, nsamples=5000, verb=FALSE)
 
 ```
 
@@ -152,11 +152,14 @@ We do the same for the TMCMC adaptive versions.
 <img src='adapt_tmcmc_compare_version_1.png' style="width:300px;height:200px;">
 <img src='adapt_tmcmc_compare_version_2.png' style="width:300px;height:200px;">
 
+Finally we present the same KS-comparison for the first co-ordinate of the principal chain (inverse temperature equal to 1) after 2000 iterations of RMC3 and RTMC3 procedures, with and without randomization in choosing the set of inverse temperatures.
+
+<img src='rmc3_rtmc3_compare_1.png' style="width:300px;height:200px;">
+<img src='rmc3_rtmc3_compare.png' style="width:300px;height:200px;">
+
 
 ### Acknowledgements
 
-
-- Sourabh Bhattacharya, Indian Statistical Institute
 - Gao Wang, Stephens Lab, University of Chicago
 - Nan Xiao, Stephens Lab, University of Chicago
 
