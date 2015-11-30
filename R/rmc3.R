@@ -68,9 +68,9 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
       {
         indices <- sample(1:length(beta_set), 2);
       }
-      chain1 <- rmc3_chains[[k]][indices[1],];
-      chain2 <- rmc3_chains[[k-1]][indices[2],];
-      swap_rate <- min(1, exp((beta_set[k] - beta_set[(k-1)])*(target_pdf(chain2)-target_pdf(chain1))));
+      chain1 <- rmc3_chains[[indices[1]]][num,];
+      chain2 <- rmc3_chains[[indices[2]]][num,];
+      swap_rate <- min(1, exp((beta_set[indices[2]] - beta_set[indices[1]])*(target_pdf(chain2)-target_pdf(chain1))));
       w <- runif(1,0,1)
       if(w < swap_rate){
         rmc3_chains[[indices[1]]][num,] <- chain2;
