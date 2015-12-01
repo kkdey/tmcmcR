@@ -20,8 +20,6 @@ Mult_Mattingly=array(0,c(2,L,nsamples,d));
 
 Mattingly_matrix <- 100*(diag(1-0.7,d)+0.7*rep(1,d)%*%t(rep(1,d)));
 
-library(mnormt)
-library(fMultivar)
 library(mvtnorm)
 library(parallel)
 
@@ -35,9 +33,9 @@ beta_set <- seq(1,0.05,length.out=10);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- rtmc3(pdf,beta_set=beta_set,base=base, scale=1, cycle=20,
+  Mult_Mattingly[1,l,,] <- tmcmcR:::rtmc3(pdf,beta_set=beta_set,base=base, scale=1, cycle=20,
                                  swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]];
-  Mult_Mattingly[2,l,,] <- rmc3(pdf,beta_set=beta_set, base=base, scale=1, cycle=20,
+  Mult_Mattingly[2,l,,] <- tmcmcR:::rmc3(pdf,beta_set=beta_set, base=base, scale=1, cycle=20,
                                 swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]];
   cat("We are at iter:",l, "\n")
 }

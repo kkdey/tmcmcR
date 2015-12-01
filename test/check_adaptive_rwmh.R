@@ -34,9 +34,9 @@ base=rnorm(d,0,1);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, method="Atchade", verb=FALSE)$chain;
-  Mult_Mattingly[2,l,,] <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, method="SCAM", verb=FALSE)$chain;
-  Mult_Mattingly[3,l,,] <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, method="Rama", verb=FALSE)$chain
+  Mult_Mattingly[1,l,,] <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, method="Atchade", verb=FALSE)$chain;
+  Mult_Mattingly[2,l,,] <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, method="SCAM", verb=FALSE)$chain;
+  Mult_Mattingly[3,l,,] <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, method="Rama", verb=FALSE)$chain
   cat("We are at iter:",l, "\n")
 }
 
