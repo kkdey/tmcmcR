@@ -4,7 +4,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 List tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f){
 
-//  int n = x.size();
+  int n = x.size();
   NumericVector y = x + (b*eps);
   double p1= f(x);
   double p2 = f(y);
@@ -29,7 +29,7 @@ List tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f){
 // [[Rcpp::export]]
 List rwmhUpdate(NumericVector x, NumericVector eps, F<double> f){
 
-//  int n = x.size();
+  int n = x.size();
   NumericVector y = x + eps;
   double p1= f(x);
   double p2 = f(y);
