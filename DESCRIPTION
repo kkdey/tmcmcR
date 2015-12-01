@@ -21,4 +21,4 @@ Suggests:
     knitr,
     mvtnorm
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 4.1.1
