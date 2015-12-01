@@ -33,24 +33,25 @@ require(tmcmcR)
 
 The chains we implement in this package, together with the exact functionality, include
 
-- **rwmh_metrop( )** : Standard Random Walk Metropolis Hastings (RWMH)
-- **tmcmc_metrop( )**: Standard Transformation based Markov Chain Monte Carlo (TMCMC)
-- **adapt_rwmh_metrop( )** : Adaptive Random Walk Metropolis Hastings, method: *SCAM, RAMA, Atchade*
-- **adapt_tmcmc_metrop( )**: Adaptive Transformation based Markov Chain Monte Carlo, method: *SCAM, RAMA, Atchade*
-- **rmc3( )**: Metropolis Coupling Markov Chain Monte Carlo with RWMH update 
-- **rtmc3( )**: Metropolis Coupling Markov Chain Monte Carlo with TMCMC update (TMC3)
+- **tmcmcR:::rwmh_metrop( )** : Standard Random Walk Metropolis Hastings (RWMH)
+- **tmcmcR:::tmcmc_metrop( )**: Standard Transformation based Markov Chain Monte Carlo (TMCMC)
+- **tmcmcR:::adapt_rwmh_metrop( )** : Adaptive Random Walk Metropolis Hastings, method: *SCAM, RAMA, Atchade*
+- **tmcmcR:::adapt_tmcmc_metrop( )**: Adaptive Transformation based Markov Chain Monte Carlo, method: *SCAM, RAMA, Atchade*
+- **tmcmcR:::rmc3( )**: Metropolis Coupling Markov Chain Monte Carlo with RWMH update 
+- **tmcmcR:::rtmc3( )**: Metropolis Coupling Markov Chain Monte Carlo with TMCMC update (TMC3)
 
 The last two methods need selection of inverse temperatures to run multiple chains and use these parallel chains for swapping
 at regular intervals. For target densities with product of known iid components, we have a selection scheme for inverse temperatures
 which may be of two types, depending on if the step size is fixed or randomized.
 
-- **select_inverse_temp( )**: Inverse temperature selection scheme, method: *TMCMC*, *RWMH*, scheme: *fixed*, *randomized*.
+- **tmcmcR:::select_inverse_temp( )**: Inverse temperature selection scheme, method: *TMCMC*, *RWMH*, scheme: *fixed*, *randomized*.
+
+As of now, the functions **tmcmcR:::rmc3( )** and **tmcmcR:::rtmc3( )** uses *parallel::mclapply( )* for parallel implementation of chains at different inverse temperatures. However, this function is not compatible with Windows framework. For Windows users, we recommend replacing the *mclapply( )* by *mclapply.hack( )*, a nice hack implemented by Nathan VanHoudnos, for which one needs to source this [script](source('http://www.stat.cmu.edu/~nmv/setup/mclapply.hack.R'). Check this [blog post](http://www.r-bloggers.com/implementing-mclapply-on-windows-a-primer-on-embarrassingly-parallel-computation-on-multicore-systems-with-r/) for more details on this functionality. I may switch to this hack for later versions of this package, so watch this space. 
 
 ### Vignettes
 
 For checking example usage of functions under the **tmcmcR** package, check out the [ vignette](https://rpubs.com/kkdey/132076).
-Also check the Github folder [test](https://github.com/kkdey/tmcmcR/tree/master/test) for simulation examples for each function
-in the package (we use these codes to generate the figures in the vignette).
+Also check the Github folder [test](https://github.com/kkdey/tmcmcR/tree/master/test) for simulation examples *R scripts* on each of the princiapl functions of the package (we use these codes to generate the figures in the vignette).
 
 ### Citation
 
