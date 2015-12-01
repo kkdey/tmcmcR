@@ -15,7 +15,7 @@ Transformation based Markov Chain Monte Carlo (TMCMC) is a modification of stand
 
 To install the **tmcmcR** package, 
 
-```{r install_package, results='hide', message = FALSE, warning = FALSE}
+```{r install_package, results='hide', message = FALSE, warning = FALSE, eval=FALSE}
 library(devtools)
 install_github('kkdey/tmcmcR')
 ```
@@ -69,13 +69,13 @@ base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
 For running the general RWMH chain, use the `rwmh_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
+system.time(out_rwmh <- tmcmcR:::rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 To run the TMCMC chain, use the `tmcmc_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
+system.time(out_tmcmc <- tmcmcR:::tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 ### Adaptive version
@@ -85,13 +85,13 @@ For the general RWMH and TMCMC chains, the user is required to provide the propo
 #### RWMH adaptive versions
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_rwmh <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
                                                   method="Atchade", verb=FALSE));
 
-system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_rwmh <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
                                                   method="SCAM", verb=FALSE));
 
-system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
+system.time(out_adapt_rwmh <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
                                       a_rama = 1, b_rama=1, M_rama=100, method="Rama"));
 
 ```
@@ -99,13 +99,13 @@ system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, ve
 #### TMCMC adaptive versions
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_tmcmc <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
                                                   method="Atchade", verb=FALSE));
 
-system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_tmcmc <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
                                                   method="SCAM", verb=FALSE));
 
-system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
+system.time(out_adapt_tmcmc <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
                                       a_rama = 1, b_rama=1, M_rama=100, method="Rama"));
 
 ```
@@ -118,7 +118,7 @@ The usual RWMH or TMCMC chains do not perform well on multimodal densities and h
 
 ```{r echo=TRUE, eval=FALSE}
 
-inverse_temp <- select_inverse_temp(pdf_component, minbeta=0.05, L_iter =50, 
+inverse_temp <- tmcmcR:::select_inverse_temp(pdf_component, minbeta=0.05, L_iter =50, 
                                     sim_method="TMCMC",inv_temp_scheme = "randomized")
 
 ```
@@ -131,7 +131,8 @@ For RTMC3, one can define the `beta_set` to be the output array of inverse tempe
 ```{r echo=TRUE, eval=FALSE}
 
 base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
-out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
+out_rtmc3 <- tmcmcR:::rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
+out_rtmc3 <- tmcmcR:::rmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
 
 ```
 

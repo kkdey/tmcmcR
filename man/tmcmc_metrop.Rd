@@ -27,7 +27,7 @@ Returns a list containing the following items
  @author  Kushal K Dey
 
  @useDynLib tmcmcR
-
+ @import tmcmcR
  @export
 }
 \description{

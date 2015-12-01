@@ -18,7 +18,7 @@
 #'  @author  Kushal K Dey
 #'
 #'  @useDynLib tmcmcR
-#'
+#'  @import tmcmcR
 #'  @export
 
 

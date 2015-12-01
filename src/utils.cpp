@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "tmcmcR.h"
+#include "../inst/include/tmcmcR.h"
 using namespace Rcpp;
 // [[Rcpp::export]]
 List tmcmcUpdate(NumericVector x, NumericVector b, double eps, F<double> f){
