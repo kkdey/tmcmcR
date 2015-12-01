@@ -12,6 +12,6 @@ Description: This package performs fast Transformation based Markov Chain Monte 
 License: GPL (>= 2)
 LazyData: TRUE
 LinkingTo: Rcpp
-Imports: Rcpp, mvtnorm
-Suggests: knitr, parallel
+Imports: Rcpp
+Suggests: knitr, parallel, mvtnorm
 VignetteBuilder: knitr
