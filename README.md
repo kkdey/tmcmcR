@@ -50,14 +50,14 @@ As of now, the functions **tmcmcR:::rmc3( )** and **tmcmcR:::rtmc3( )** uses *pa
 
 ### Vignettes
 
-For checking example usage of functions under the **tmcmcR** package, check out the [ vignette](https://rpubs.com/kkdey/132076).
+For checking example usage of functions under the **tmcmcR** package, check out the [ vignette](https://rpubs.com/kkdey/132392).
 Also check the Github folder [test](https://github.com/kkdey/tmcmcR/tree/master/test) for simulation examples *R scripts* on each of the princiapl functions of the package (we use these codes to generate the figures in the vignette).
 
 ### Citation
 
 If you are using the **tmcmcR** R package, please cite 
 
-KK Dey, S Bhattacharya. **tmcmcR: R package for MCMC with improved acceptance rate and coverage**. [![RPubs doc](icons/R-icon.png)](http://rpubs.com/kkdey/132076).
+KK Dey, S Bhattacharya. **tmcmcR: R package for MCMC with improved acceptance rate and coverage**. [![RPubs doc](icons/R-icon.png)](http://rpubs.com/kkdey/132392).
 
 For the TMCMC methods and materials, please check
 
