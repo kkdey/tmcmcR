@@ -48,7 +48,7 @@ which may be of two types, depending on if the step size is fixed or randomized.
 
 ### Vignettes
 
-For checking example usage of functions under the **tmcmcR** package, check out the [RPubs vignette](https://rpubs.com/kkdey/123141).
+For checking example usage of functions under the **tmcmcR** package, check out the [RPubs vignette](https://rpubs.com/kkdey/132076).
 Also check the Github folder [test](https://github.com/kkdey/tmcmcR/tree/master/test) for simulation examples for each function
 in the package (we use these codes to generate the figures in the vignette).
 
