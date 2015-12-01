@@ -17,8 +17,8 @@ LinkingTo: Rcpp
 Imports:
     Rcpp,
     parallel
-    knitr
 Suggests:
+    knitr,
     mvtnorm
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
