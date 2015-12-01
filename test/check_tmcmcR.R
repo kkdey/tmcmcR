@@ -2,7 +2,7 @@
 ## Running tmcmcR on some simple illustrative examples
 
 library(devtools)
-#install_github('kkdey/tmcmcR')
+install_github('kkdey/tmcmcR2')
 library(tmcmcR)
 library(mcmc)
 d=50;  ##  dimension of the simulated variable
@@ -32,7 +32,7 @@ base=rnorm(d,0,1);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- tmcmcR:::tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000,burn_in = NULL)$chain;
+  Mult_Mattingly[1,l,,] <- tmcmcR2:::tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000,burn_in = NULL)$chain;
   Mult_Mattingly[2,l,,] <- tmcmcR:::rwmh_metrop(pdf,base=base, scale=1,nsamples=5000,burn_in = NULL)$chain;
   cat("We are at iter:",l, "\n")
 }
