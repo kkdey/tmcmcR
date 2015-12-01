@@ -36,7 +36,7 @@ The chains we implement in this package, together with the exact functionality, 
 - **rwmh_metrop( )** : Standard Random Walk Metropolis Hastings (RWMH)
 - **tmcmc_metrop( )**: Standard Transformation based Markov Chain Monte Carlo (TMCMC)
 - **adapt_rwmh_metrop( )** : Adaptive Random Walk Metropolis Hastings, method: *SCAM, RAMA, Atchade*
-- **adapt_tmcmc_metrop( )**: Adaptive Transformation based MArkov Chain Monte Carlo, method: *SCAM, RAMA, Atchade*
+- **adapt_tmcmc_metrop( )**: Adaptive Transformation based Markov Chain Monte Carlo, method: *SCAM, RAMA, Atchade*
 - **rmc3( )**: Metropolis Coupling Markov Chain Monte Carlo with RWMH update 
 - **rtmc3( )**: Metropolis Coupling Markov Chain Monte Carlo with TMCMC update (TMC3)
 
