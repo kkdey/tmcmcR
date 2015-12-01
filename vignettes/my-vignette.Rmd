@@ -23,7 +23,7 @@ install_github('kkdey/tmcmcR')
 To load the package,
 
 ```{r load_package,  message = FALSE, warning = FALSE}
-require(tmcmcR)
+library(tmcmcR)
 ```
 
 ## Arguments Format
@@ -69,7 +69,7 @@ base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
 For running the general RWMH chain, use the `rwmh_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
+system.time(out_rwmh <- tmcmcR::rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 To run the TMCMC chain, use the `tmcmc_metrop` function.

@@ -14,8 +14,6 @@
 #' \item{chain}{The full chain produced by the RWMH method.}
 #' \item{post.mean}{The estimated posterior mean of the RWMH chain adjusting for burn-in.}
 #
-#'
-#
 #'  @author  Kushal K Dey
 #'
 #'  @useDynLib tmcmcR
