@@ -1,5 +1,5 @@
 ---
-title: "tmcmcR:  R package for sampling with improved coverage"
+title: "tmcmcR: R package for MCMC with improved acceptance rate and coverage"
 author: "Kushal K Dey, Sourabh Bhattacharya"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
