@@ -61,9 +61,11 @@ KK Dey, S Bhattacharya. **tmcmcR: R package for MCMC with improved acceptance ra
 
 For the TMCMC methods and materials, please check
 
-S Dutta, S Bhattacharya. **Markov Chain Monte Carlo Based on Deterministic Transformations**. [![pdf](icons/pdf-icon.png)](http://www.sciencedirect.com/science/article/pii/S1572312713000683)
+S Dutta, S Bhattacharya. **Markov Chain Monte Carlo Based on Deterministic Transformations**. *Statistical Methodology* [![pdf](icons/pdf-icon.png)](http://www.sciencedirect.com/science/article/pii/S1572312713000683)
 
 KK Dey, S Bhattacharya. **On Optimal Scaling of Additive Transformation Based Markov Chain Monte Carlo**. Submitted *Brazilian Journal of Probability and Statistics*. [![pdf](icons/pdf-icon.png)](http://arxiv.org/pdf/1307.1446v4.pdf)
+
+KK Dey, S Bhattacharya. **On Geometric Ergodicity of Additive and Multiplicative Transformation Based Markov Chain Monte Carlo in High Dimensions**. *Brazilian Journal of Probability and Statistics*. [![pdf](icons/pdf-icon.png)](http://imstat.org/bjps/papers/BJPS295.pdf)
 
 KK Dey, S Bhattacharya. **On Single Variable Transformation Approach to Markov Chain Monte Carlo**. *JSM Proceedings*. 2014.  [![pdf](icons/pdf-icon.png)](http://arxiv.org/abs/1408.6667)
 
