@@ -2,7 +2,6 @@
 #' @description This function mimics the mclapply function in Windows machine using makeCluster and parapply functionalities.
 #'
 #' @author Nathan VanHoudnos, Kushal K Dey
-#' @keywords internal
 #' @useDynLib tmcmcR
 #' @export
 
@@ -14,7 +13,7 @@ mclapply.hack <- function(...) {
   ##          argument passed to the function. In
   ##          this case it is the list to iterate over
   size.of.list <- length(list(...)[[1]])
-  cl <- makeCluster( min(size.of.list, detectCores()) )
+  cl <- parallel::makeCluster( min(size.of.list, detectCores()) )
 
   ## Find out the names of the loaded packages
   loaded.package.names <- c(
@@ -38,19 +37,19 @@ mclapply.hack <- function(...) {
     ##
     this.env <- environment()
     while( identical( this.env, globalenv() ) == FALSE ) {
-      clusterExport(cl,
+      parallel::clusterExport(cl,
                     ls(all.names=TRUE, env=this.env),
                     envir=this.env)
       this.env <- parent.env(environment())
     }
     ## repeat for the global environment
-    clusterExport(cl,
+    parallel::clusterExport(cl,
                   ls(all.names=TRUE, env=globalenv()),
                   envir=globalenv())
 
     ## Load the libraries on all the clusters
     ## N.B. length(cl) returns the number of clusters
-    parLapply( cl, 1:length(cl), function(xx){
+    parallel::parLapply( cl, 1:length(cl), function(xx){
       lapply(loaded.package.names, function(yy) {
         ## N.B. the character.only option of
         ##      require() allows you to give the
@@ -59,9 +58,9 @@ mclapply.hack <- function(...) {
     })
 
     ## Run the lapply in parallel
-    return( parLapply( cl, ...) )
+    return( parallel::parLapply( cl, ...) )
   }, finally = {
     ## Stop the cluster
-    stopCluster(cl)
+    parallel::stopCluster(cl)
   })
 }
