@@ -13,7 +13,7 @@ mclapply.hack <- function(...) {
   ##          argument passed to the function. In
   ##          this case it is the list to iterate over
   size.of.list <- length(list(...)[[1]])
-  cl <- parallel::makeCluster( min(size.of.list, detectCores()) )
+  cl <- parallel::makeCluster( min(size.of.list, parallel::detectCores()) )
 
   ## Find out the names of the loaded packages
   loaded.package.names <- c(
