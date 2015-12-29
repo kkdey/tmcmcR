@@ -6,7 +6,7 @@
 #' @export
 
 
-mclapply_hack <- function(...) {
+mclapply.hack <- function(...) {
   ## Create a cluster
   ## ... How many workers do you need?
   ## ... N.B. list(...)[[1]] returns the first
