@@ -10,6 +10,6 @@ mclapply.hack(...)
 This function mimics the mclapply function in Windows machine using makeCluster and parapply functionalities.
 }
 \author{
-Nathan VanHoudnos, Kushal K Dey
+Nathan VanHoudnos
 }
 

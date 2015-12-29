@@ -1,7 +1,8 @@
 #' @title A hacking function for mclapply in Windows
 #' @description This function mimics the mclapply function in Windows machine using makeCluster and parapply functionalities.
 #'
-#' @author Nathan VanHoudnos, Kushal K Dey
+#' @author Nathan VanHoudnos
+#'
 #' @useDynLib tmcmcR
 #' @export
 
