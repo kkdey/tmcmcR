@@ -33,8 +33,8 @@ beta_set <- seq(1,0.05,length.out=10);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- tmcmcR:::rtmc3(pdf,beta_set=beta_set,base=base, scale=1, cycle=20,
-                                 swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]];
+  system.time(Mult_Mattingly[1,l,,] <- tmcmcR:::rtmc3(pdf,beta_set=beta_set,base=base, scale=1, cycle=20,
+                                 swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]]);
   Mult_Mattingly[2,l,,] <- tmcmcR:::rmc3(pdf,beta_set=beta_set, base=base, scale=1, cycle=20,
                                 swap_adjacent=TRUE, nsamples=2000, verb=FALSE)$chain_set[[1]];
   cat("We are at iter:",l, "\n")

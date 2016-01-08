@@ -2,7 +2,7 @@
 ## Running tmcmcR on some simple illustrative examples
 
 library(devtools)
-install_github('kkdey/tmcmcR')
+#install_github('kkdey/tmcmcR')
 library(tmcmcR)
 library(mcmc)
 d=50;  ##  dimension of the simulated variable
