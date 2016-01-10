@@ -27,7 +27,7 @@
 #'
 
 
-mt_tmcmc_metrop <- function(target_pdf, scale, base, nsamples, burn_in=NULL, verb=TRUE)
+mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples, burn_in=NULL, verb=TRUE)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
