@@ -42,7 +42,8 @@ mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples
     move_candidate <- trial_chains[sample(1:nmove, size=1,  prob=pi_trials_norm),];
 
     b_rev <- t(sapply(1:(nmove-1), function(l) sample(c(-1,+1),length(base),replace=TRUE)));
-    trial_chains_rev <- move_candidate + b_rev*eps[1:(nmove-1)];
+    eps_rev <- rep(rnorm(nmove_size,0,scale), each=floor(nmove/nmove_size));
+    trial_chains_rev <- move_candidate + b_rev*eps_rev[1:(nmove-1)];
     trial_chains_rev <- rbind(trial_chains_rev, chain[(num-1),]);
     pi_trials_rev <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains_rev[x,])))
     pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials_rev));
