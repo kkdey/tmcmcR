@@ -11,6 +11,7 @@
 #' @param nmove_size The number of distinct move sizes used.
 #' @param nmove The total number of moves proposed.
 #' @param nsamples The number of samples to be drawn using the TMCMC algorithm.
+#' @param revgen If TRUE, use MT-TMCMC version 1, else version 2. Default is TRUE.
 #' @param burn_in The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.
 #' @param verb logical parameter, if TRUE the function prints the progress of simulation.
 #'
@@ -27,7 +28,7 @@
 #'
 
 
-mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples, burn_in=NULL, verb=TRUE)
+mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples, revgen=TRUE, burn_in=NULL, verb=TRUE)
 {
   if(is.null(burn_in)) burn_in <- nsamples/3;
   chain <- matrix(0, nsamples, length(base))
@@ -39,15 +40,24 @@ mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples
     trial_chains <- chain[(num-1),]+ b*eps;
     pi_trials <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains[x,])))
     pi_trials_norm <- exp(pi_trials - max(pi_trials));
-    move_candidate <- trial_chains[sample(1:nmove, size=1,  prob=pi_trials_norm),];
-
+    index <- sample(1:nmove, size=1,  prob=pi_trials_norm);
+    move_candidate <- trial_chains[index,];
+    if(revgen){
     b_rev <- t(sapply(1:(nmove-1), function(l) sample(c(-1,+1),length(base),replace=TRUE)));
     eps_rev <- rep(rnorm(nmove_size,0,scale), each=floor(nmove/nmove_size));
     trial_chains_rev <- move_candidate + b_rev*eps_rev[1:(nmove-1)];
     trial_chains_rev <- rbind(trial_chains_rev, chain[(num-1),]);
     pi_trials_rev <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains_rev[x,])))
     pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials));
-
+    }
+    if(!revgen){
+      b_rev <- t(sapply(1:nmove, function(l) sample(c(-1,+1),length(base),replace=TRUE)));
+      b_rev[index,] <- -b[index,];
+      trial_chains_rev <- move_candidate + b_rev*eps;
+      trial_chains_rev <- rbind(trial_chains_rev, chain[(num-1),]);
+      pi_trials_rev <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains_rev[x,])))
+      pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials));
+    }
     acc_rate <- min(1, sum(pi_trials_norm)/sum(pi_trials_norm_rev));
     if(runif(1,0,1) < acc_rate) {chain[num,] <- move_candidate;}
     else{ chain[num,] <- chain[(num-1),];}

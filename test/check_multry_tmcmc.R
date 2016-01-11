@@ -4,7 +4,7 @@ library(devtools)
 #install_github('kkdey/tmcmcR')
 library(tmcmcR)
 library(mcmc)
-d=20;  ##  dimension of the simulated variable
+d=30;  ##  dimension of the simulated variable
 L=30; ###   the number of replications we use for finding KS statistic
 nsamples <- 5000;
 Mult_Mattingly=array(0,c(2,L,nsamples,d));
@@ -31,8 +31,8 @@ base=rnorm(d,0,1);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- tmcmcR:::mt_tmcmc_metrop(pdf, base=base, scale=1,nmove_size=5, nmove=50, nsamples=5000,burn_in = NULL)$chain;
-  Mult_Mattingly[2,l,,] <- tmcmcR:::tmcmc_metrop(pdf, base=base, scale=1, nsamples=5000,burn_in = NULL)$chain;
+  Mult_Mattingly[1,l,,] <- tmcmcR:::mt_tmcmc_metrop(pdf, base=base, scale=1,nmove_size=5, nmove=50, nsamples=1000,burn_in = NULL)$chain;
+  Mult_Mattingly[2,l,,] <- tmcmcR:::tmcmc_metrop(pdf, base=base, scale=1, nsamples=1000,burn_in = NULL)$chain;
   cat("We are at iter:",l, "\n")
 }
 
