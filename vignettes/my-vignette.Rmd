@@ -23,6 +23,7 @@ install_github('kkdey/tmcmcR')
 To load the package,
 
 ```{r load_package,  message = FALSE, warning = FALSE}
+library(Rcpp)
 library(tmcmcR)
 ```
 
@@ -136,6 +137,19 @@ out_rtmc3 <- tmcmcR:::rmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cyc
 
 ```
 
+## Multiple Try TMCMC
+
+Multiple try methods introduced by [Liu, Liang and Wong, 2000](http://www.jstor.org/stable/2669532?seq=1#page_scan_tab_contents) are a modification of the standard Metropolis-Hastings algorithm that converge faster to the target density. The multiple try methods are slightly slower than the standard method, but they make up for it by the fast convergence rate to the target distribution. We implemented a multiple try version of the TMCMC approach. The user can select the number of step-sizes ($\epsilon$) to be chosen and the number of step-signs ($b$) per step-size chosen for candidate moves. 
+
+```{r echo=TRUE, eval=TRUE}
+
+system.time(out_mtry_tmcmc <- tmcmcR:::mt_tmcmc_metrop(pdf, base=base, scale=1,nmove_size=5, nmove=50, nsamples=1000,burn_in = NULL)$chain);
+
+system.time(out_tmcmc <- tmcmcR:::tmcmc_metrop(pdf, base=base, scale=1, nsamples=1000,burn_in = NULL)$chain)
+
+```
+
+
 ## Performance illustration
 
 We first compare the performance of the TMCMC chain and the RWMH chain in terms of convergence to the test distribution. We ran $50$ chains of TMCMC and RWMH for the model specified above for $nsamples = 5000$ and then compared the empirical distribution of the two chains at each time with the target density. We present the plots for two arbitrary co-ordinates.
@@ -153,10 +167,16 @@ We do the same for the TMCMC adaptive versions.
 <img src='adapt_tmcmc_compare_version_1.png' style="width:300px;height:200px;">
 <img src='adapt_tmcmc_compare_version_2.png' style="width:300px;height:200px;">
 
-Finally we present the same KS-comparison for the first co-ordinate of the principal chain (inverse temperature equal to 1) after 2000 iterations of RMC3 and RTMC3 procedures, with and without randomization in choosing the set of inverse temperatures.
+We present the same KS-comparison for the first co-ordinate of the principal chain (inverse temperature equal to 1) after 2000 iterations of RMC3 and RTMC3 procedures, with and without randomization in choosing the set of inverse temperatures.
 
 <img src='rmc3_rtmc3_compare_1.png' style="width:300px;height:200px;">
 <img src='rmc3_rtmc3_compare.png' style="width:300px;height:200px;">
+
+We present next the KS- comparison of two co-ordinates of from iteration 1 to $1000$ for a multiple try TMCMC and a standard TMCMC procedures. 
+
+<img src='mtry_tmcmc_compare_1.png' style="width:300px;height:200px;">
+<img src='mtry_tmcmc_compare_2.png' style="width:300px;height:200px;">
+
 
 
 ### Acknowledgements
