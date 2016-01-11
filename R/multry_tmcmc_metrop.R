@@ -54,7 +54,6 @@ mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples
       b_rev <- t(sapply(1:nmove, function(l) sample(c(-1,+1),length(base),replace=TRUE)));
       b_rev[index,] <- -b[index,];
       trial_chains_rev <- move_candidate + b_rev*eps;
-      trial_chains_rev <- rbind(trial_chains_rev, chain[(num-1),]);
       pi_trials_rev <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains_rev[x,])))
       pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials));
     }

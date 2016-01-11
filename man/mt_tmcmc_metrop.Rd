@@ -5,7 +5,7 @@
 \title{Simulate a Multiple Try Transformation based Markov Chain Monte Carlo (MT-TMCMC) algorithm (Rcpp sped up version)}
 \usage{
 mt_tmcmc_metrop(target_pdf, scale, base, nmove_size, nmove, nsamples,
-  burn_in = NULL, verb = TRUE)
+  revgen = TRUE, burn_in = NULL, verb = TRUE)
 }
 \arguments{
 \item{target_pdf}{The log target density function from which the user wants to generate samples.}
@@ -20,6 +20,8 @@ The default scale is this estimated optimal scaling}
 \item{nmove}{The total number of moves proposed.}
 
 \item{nsamples}{The number of samples to be drawn using the TMCMC algorithm.}
+
+\item{revgen}{If TRUE, use MT-TMCMC version 1, else version 2. Default is TRUE.}
 
 \item{burn_in}{The number of samples assigned as burn-in period. The default burn-in is taken to be one-third of nsamples.}
 
