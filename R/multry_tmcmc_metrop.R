@@ -46,7 +46,7 @@ mt_tmcmc_metrop <- function(target_pdf, scale, base, nmove_size, nmove, nsamples
     trial_chains_rev <- move_candidate + b_rev*eps_rev[1:(nmove-1)];
     trial_chains_rev <- rbind(trial_chains_rev, chain[(num-1),]);
     pi_trials_rev <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains_rev[x,])))
-    pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials_rev));
+    pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials));
 
     acc_rate <- min(1, sum(pi_trials_norm)/sum(pi_trials_norm_rev));
     if(runif(1,0,1) < acc_rate) {chain[num,] <- move_candidate;}
