@@ -15,7 +15,7 @@ Transformation based Markov Chain Monte Carlo (TMCMC) is a modification of stand
 
 To install the **tmcmcR** package, 
 
-```{r install_package, results='hide', message = FALSE, warning = FALSE}
+```{r install_package, results='hide', message = FALSE, warning = FALSE, eval=FALSE}
 library(devtools)
 install_github('kkdey/tmcmcR')
 ```
@@ -23,7 +23,8 @@ install_github('kkdey/tmcmcR')
 To load the package,
 
 ```{r load_package,  message = FALSE, warning = FALSE}
-require(tmcmcR)
+library(Rcpp)
+library(tmcmcR)
 ```
 
 ## Arguments Format
@@ -69,13 +70,13 @@ base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
 For running the general RWMH chain, use the `rwmh_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_rwmh <- rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
+system.time(out_rwmh <- tmcmcR:::rwmh_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 To run the TMCMC chain, use the `tmcmc_metrop` function.
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_tmcmc <- tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
+system.time(out_tmcmc <- tmcmcR:::tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000, verb=FALSE))
 ```
 
 ### Adaptive version
@@ -85,13 +86,13 @@ For the general RWMH and TMCMC chains, the user is required to provide the propo
 #### RWMH adaptive versions
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_rwmh <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
                                                   method="Atchade", verb=FALSE));
 
-system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_rwmh <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, 
                                                   method="SCAM", verb=FALSE));
 
-system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
+system.time(out_adapt_rwmh <- tmcmcR:::adapt_rwmh_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
                                       a_rama = 1, b_rama=1, M_rama=100, method="Rama"));
 
 ```
@@ -99,13 +100,13 @@ system.time(out_adapt_rwmh <- adapt_rwmh_metrop(pdf,base=base, nsamples=5000, ve
 #### TMCMC adaptive versions
 
 ```{r echo=TRUE, eval=TRUE}
-system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_tmcmc <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
                                                   method="Atchade", verb=FALSE));
 
-system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
+system.time(out_adapt_tmcmc <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, 
                                                   method="SCAM", verb=FALSE));
 
-system.time(out_adapt_tmcmc <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
+system.time(out_adapt_tmcmc <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, verb=FALSE,
                                       a_rama = 1, b_rama=1, M_rama=100, method="Rama"));
 
 ```
@@ -118,7 +119,7 @@ The usual RWMH or TMCMC chains do not perform well on multimodal densities and h
 
 ```{r echo=TRUE, eval=FALSE}
 
-inverse_temp <- select_inverse_temp(pdf_component, minbeta=0.05, L_iter =50, 
+inverse_temp <- tmcmcR:::select_inverse_temp(pdf_component, minbeta=0.05, L_iter =50, 
                                     sim_method="TMCMC",inv_temp_scheme = "randomized")
 
 ```
@@ -131,9 +132,23 @@ For RTMC3, one can define the `beta_set` to be the output array of inverse tempe
 ```{r echo=TRUE, eval=FALSE}
 
 base=rnorm(d,0,1); ## the starting point generated independently from N(0,1)
-out_rtmc3 <- rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
+out_rtmc3 <- tmcmcR:::rtmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
+out_rtmc3 <- tmcmcR:::rmc3(pdf, beta_set = inverse_temp, scale=1, base=base, cycle=10, nsamples=5000, verb=FALSE)
 
 ```
+
+## Multiple Try TMCMC
+
+Multiple try methods introduced by [Liu, Liang and Wong, 2000](http://www.jstor.org/stable/2669532?seq=1#page_scan_tab_contents) are a modification of the standard Metropolis-Hastings algorithm that converge faster to the target density. The multiple try methods are slightly slower than the standard method, but they make up for it by the fast convergence rate to the target distribution. We implemented a multiple try version of the TMCMC approach. The user can select the number of step-sizes ($\epsilon$) to be chosen and the number of step-signs ($b$) per step-size chosen for candidate moves. 
+
+```{r echo=TRUE, eval=TRUE}
+
+system.time(out_mtry_tmcmc <- tmcmcR:::mt_tmcmc_metrop(pdf, base=base, scale=1,nmove_size=5, nmove=50, nsamples=1000,burn_in = NULL)$chain);
+
+system.time(out_tmcmc <- tmcmcR:::tmcmc_metrop(pdf, base=base, scale=1, nsamples=1000,burn_in = NULL)$chain)
+
+```
+
 
 ## Performance illustration
 
@@ -152,10 +167,16 @@ We do the same for the TMCMC adaptive versions.
 <img src='adapt_tmcmc_compare_version_1.png' style="width:300px;height:200px;">
 <img src='adapt_tmcmc_compare_version_2.png' style="width:300px;height:200px;">
 
-Finally we present the same KS-comparison for the first co-ordinate of the principal chain (inverse temperature equal to 1) after 2000 iterations of RMC3 and RTMC3 procedures, with and without randomization in choosing the set of inverse temperatures.
+We present the same KS-comparison for the first co-ordinate of the principal chain (inverse temperature equal to 1) after 2000 iterations of RMC3 and RTMC3 procedures, with and without randomization in choosing the set of inverse temperatures.
 
 <img src='rmc3_rtmc3_compare_1.png' style="width:300px;height:200px;">
 <img src='rmc3_rtmc3_compare.png' style="width:300px;height:200px;">
+
+We present next the KS- comparison of two co-ordinates of from iteration 1 to $1000$ for a multiple try TMCMC and a standard TMCMC procedures. 
+
+<img src='mtry_tmcmc_compare_1.png' style="width:300px;height:200px;">
+<img src='mtry_tmcmc_compare_2.png' style="width:300px;height:200px;">
+
 
 
 ### Acknowledgements

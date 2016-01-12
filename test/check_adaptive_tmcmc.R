@@ -21,8 +21,6 @@ Mult_Mattingly=array(0,c(3,L,nsamples,d));
 
 Mattingly_matrix <- 100*(diag(1-0.7,d)+0.7*rep(1,d)%*%t(rep(1,d)));
 
-library(mnormt)
-library(fMultivar)
 library(mvtnorm)
 
 pdf = function(x)
@@ -34,9 +32,9 @@ base=rnorm(d,0,1);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Atchade", verb=FALSE)$chain;
-  Mult_Mattingly[2,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="SCAM", verb=FALSE)$chain;
-  Mult_Mattingly[3,l,,] <- adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Rama", verb=FALSE)$chain
+  Mult_Mattingly[1,l,,] <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Atchade", verb=FALSE)$chain;
+  Mult_Mattingly[2,l,,] <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="SCAM", verb=FALSE)$chain;
+  Mult_Mattingly[3,l,,] <- tmcmcR:::adapt_tmcmc_metrop(pdf,base=base, nsamples=5000, method="Rama", verb=FALSE)$chain
   cat("We are at iter:",l, "\n")
 }
 

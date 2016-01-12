@@ -38,6 +38,7 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
   rmc3_chains <- vector("list", length(beta_set));
   num = 1
   while(num <= nsamples){
+    if(.Platform$OS.type == "unix"){
     chain_set <- parallel::mclapply(1:length(beta_set),
                              function(k){
                                if(num==1){
@@ -54,6 +55,25 @@ rmc3 <- function(target_pdf, beta_set, scale, base, nsamples, cycle, verb=TRUE,
                                return(out)
                              }, mc.cores=parallel::detectCores()
     )
+    }
+    else{
+      chain_set <- mclapply.hack(1:length(beta_set),
+                                      function(k){
+                                        if(num==1){
+                                          chain <- t(as.matrix(base, nrow=1));
+                                          out <- chain;
+                                        }
+                                        if(num > 1)
+                                        {
+                                          temp_chain <- rmc3_chains[[k]][(num-1),];
+                                          eps <- rnorm(length(temp_chain),0,scale);
+                                          temp_chain <- rwmhUpdate(temp_chain,eps,function(x) return(beta_set[k]*target_pdf(x)))$chain;
+                                          out <- rbind(rmc3_chains[[k]],as.vector(temp_chain));
+                                        }
+                                        return(out)
+                                      }
+      )
+    }
 
     rmc3_chains <- chain_set;
 

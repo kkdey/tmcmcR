@@ -1,13 +1,12 @@
-
 ## Running tmcmcR on some simple illustrative examples
 
 library(devtools)
 #install_github('kkdey/tmcmcR')
 library(tmcmcR)
 library(mcmc)
-d=50;  ##  dimension of the simulated variable
+d=30;  ##  dimension of the simulated variable
 L=30; ###   the number of replications we use for finding KS statistic
-nsamples <- 5000;
+nsamples <- 1000;
 Mult_Mattingly=array(0,c(2,L,nsamples,d));
 
 
@@ -32,31 +31,31 @@ base=rnorm(d,0,1);
 
 for ( l in 1:L)
 {
-  Mult_Mattingly[1,l,,] <- tmcmcR:::tmcmc_metrop(pdf,base=base, scale=1,nsamples=5000,burn_in = NULL)$chain;
-  Mult_Mattingly[2,l,,] <- tmcmcR:::rwmh_metrop(pdf,base=base, scale=1,nsamples=5000,burn_in = NULL)$chain;
+  Mult_Mattingly[1,l,,] <- tmcmcR:::mt_tmcmc_metrop(pdf, base=base, scale=1,nmove_size=5, nmove=50, nsamples=1000,burn_in = NULL)$chain;
+  Mult_Mattingly[2,l,,] <- tmcmcR:::tmcmc_metrop(pdf, base=base, scale=1, nsamples=1000,burn_in = NULL)$chain;
   cat("We are at iter:",l, "\n")
 }
 
 
 KSval_TMCMC=array(0,nsamples);
-KSval_MCMC=array(0,nsamples);
+KSval_mtry_TMCMC=array(0,nsamples);
 
-for(d in 1:40)
+for(d in 1:30)
 {
   for(n in 1:nsamples)
   {
     simulate.vec <- rnorm(L,mu_target[d],Sigma_target[d,d]/(sqrt(2*Sigma_target[d,d]^2+1)));
-    KSval_TMCMC[n]=ks.test(Mult_Mattingly[1,,n,d],simulate.vec)$statistic;
-    KSval_MCMC[n]=ks.test(Mult_Mattingly[2,,n,d],simulate.vec)$statistic;
+    KSval_mtry_TMCMC[n]=ks.test(Mult_Mattingly[1,,n,d],simulate.vec)$statistic;
+    KSval_TMCMC[n]=ks.test(Mult_Mattingly[2,,n,d],simulate.vec)$statistic;
 
   }
 
-  plot(1:nsamples,KSval_TMCMC,col="red",type="l",lwd=1,pch=2,xlab="",ylab="")
-  lines(1:nsamples,KSval_MCMC,col="blue",lwd=1,pch=3)
+  plot(1:nsamples,KSval_mtry_TMCMC,col="red",type="l",lwd=1,pch=2,xlab="",ylab="")
+  lines(1:nsamples,KSval_TMCMC,col="blue",lwd=1,pch=3)
   title(xlab="Time step of run");
   title(ylab="KS test distance");
   title(main="KS plot comparison");
-  legend("topright",c("TMCMC","RWMH"),fill=c("red","blue"),border="black");
+  legend("topright",c("mtry_TMCMC","TMCMC"),fill=c("red","blue"),border="black");
 }
 
 
