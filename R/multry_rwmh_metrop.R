@@ -41,9 +41,8 @@ mt_rwmh_metrop <- function(target_pdf, scale, base, nmove, nsamples, burn_in=NUL
     pi_trials_norm <- exp(pi_trials - max(pi_trials));
     index <- sample(1:nmove, size=1,  prob=pi_trials_norm);
     move_candidate <- trial_chains[index,];
-    eps_rev <- rbind(matrix(rnorm((nmove-1)*length(base),0,scale), nrow=(nmove-1)),eps[index,]);
+    eps_rev <- rbind(matrix(rnorm((nmove-1)*length(base),0,scale), nrow=(nmove-1)),-eps[index,]);
     trial_chains_rev <- move_candidate + eps_rev;
-    trial_chains_rev <- rbind(trial_chains_rev, chain[(num-1),]);
     pi_trials_rev <- unlist(lapply(1:nmove, function(x) target_pdf(trial_chains_rev[x,])))
     pi_trials_norm_rev <- exp(pi_trials_rev - max(pi_trials));
 
